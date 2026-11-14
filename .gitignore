@@ -1,9 +1,15 @@
-# --- Repository standard (STANDARD.md §13) ---------------------------------
-# Merge with GitHub's official template for the language:
-#   gh api /gitignore/templates/<Lang> --jq .source
+# --- Project ---------------------------------------------------------------
 
-# Single source of truth lives in the separate <repo>.ssot repository (§14)
+# Local planning notes, not part of the project
 /.ssot/
+
+# Model weights: never commit; download them locally when needed
+/models/
+*.gguf
+*.onnx
+*.onnx.data
+*.safetensors
+*.bin
 
 # Environment files: never commit; document variables in .env.example
 .env

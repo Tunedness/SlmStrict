@@ -1,4 +1,4 @@
-# Workflow name must stay "CI": the README badge and branch protection depend on it.
+# Workflow name must stay "CI": the README badge depends on it.
 # Commands must match CONTRIBUTING.md exactly.
 name: CI
 

@@ -19,6 +19,9 @@
 *.eot    binary
 *.mp4    binary
 *.mp3    binary
+*.gguf   binary
+*.onnx   binary
+*.safetensors binary
 
 # Generated files (collapsed in diffs, excluded from language stats)
 uv.lock  linguist-generated
