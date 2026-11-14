@@ -1,0 +1,83 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "slmstrict"
+dynamic = ["version"]
+description = "Reliable structured output from on-device small language models, with opt-in cloud fallback."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Muhammet Şafak", email = "info@muhammetsafak.com" }]
+keywords = ["llm", "slm", "structured-output", "json-schema", "pydantic", "on-device"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Typing :: Typed",
+]
+dependencies = ["pydantic>=2"]
+
+[project.optional-dependencies]
+llamacpp = ["llama-cpp-python>=0.3"]
+onnx = ["onnxruntime-genai>=0.19"]
+anthropic = ["anthropic>=2.8"]
+openai = ["openai>=3.51"]
+gemini = ["google-genai>=3.3"]
+otel = ["opentelemetry-sdk>=1.45", "opentelemetry-exporter-otlp>=1.45"]
+
+[project.urls]
+Homepage = "https://github.com/Tunedness/SlmStrict"
+Issues = "https://github.com/Tunedness/SlmStrict/issues"
+Changelog = "https://github.com/Tunedness/SlmStrict/blob/main/CHANGELOG.md"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2",
+    "pytest-asyncio>=1.5",
+    "pytest-cov>=7.1",
+    "mypy>=2.4",
+    "ruff>=0.17",
+    "respx>=0.23",
+]
+
+[tool.hatch.version]
+path = "src/slmstrict/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/slmstrict"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/README.md", "/LICENSE", "/NOTICE", "/CHANGELOG.md"]
+
+[tool.mypy]
+strict = true
+python_version = "3.11"
+mypy_path = "src"
+plugins = ["pydantic.mypy"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "SIM", "C4", "PT", "RUF", "N", "ASYNC"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+markers = [
+    "integration: tests that need a real model or network access (excluded by default)",
+]
+addopts = "-m 'not integration'"
