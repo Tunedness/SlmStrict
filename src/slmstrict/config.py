@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import inspect
 from dataclasses import dataclass
+
+from slmstrict.hooks import FallbackHandler, LadderObserver
 
 __all__ = ["CostConfig", "FallbackConfig", "MetricsConfig", "StrictConfig"]
 
@@ -11,9 +14,22 @@ __all__ = ["CostConfig", "FallbackConfig", "MetricsConfig", "StrictConfig"]
 class FallbackConfig:
     """Cloud fallback settings.
 
-    Intentionally has no fields yet: provider, masking hook and logging options arrive with the
-    fallback phase, which adds fields here without changing :class:`StrictConfig`.
+    ``handler`` is the rung-4 implementation the ladder calls once grammar, repair and re-ask
+    failed. With ``handler=None`` the fallback counts as not configured. Provider, masking hook and
+    logging options arrive with the fallback phase, which adds fields here without changing
+    :class:`StrictConfig`.
     """
+
+    handler: FallbackHandler | None = None
+
+    def __post_init__(self) -> None:
+        handler = self.handler
+        if handler is None:
+            return
+        if not isinstance(handler, FallbackHandler) or not inspect.iscoroutinefunction(
+            handler.handle
+        ):
+            raise TypeError("handler must implement FallbackHandler (an async handle() method)")
 
 
 @dataclass(frozen=True, slots=True)
@@ -39,7 +55,8 @@ class StrictConfig:
     ``max_reask`` is the number of re-ask attempts after the first generation (ADR-002).
     ``local_only`` locks the cloud fallback off whatever else is configured (ADR-003).
     ``fallback``, ``metrics`` and ``cost`` default to ``None``: no cloud fallback, no metrics
-    export, cost reported as unknown.
+    export, cost reported as unknown. The cloud fallback is active only when ``fallback`` carries a
+    handler and ``local_only`` is off. ``observer`` receives the ladder events of every run.
     """
 
     max_reask: int = 2
@@ -47,6 +64,7 @@ class StrictConfig:
     fallback: FallbackConfig | None = None
     metrics: MetricsConfig | None = None
     cost: CostConfig | None = None
+    observer: LadderObserver | None = None
 
     def __post_init__(self) -> None:
         if isinstance(self.max_reask, bool) or not isinstance(self.max_reask, int):
@@ -55,3 +73,5 @@ class StrictConfig:
             raise ValueError("max_reask must be >= 0")
         if not isinstance(self.local_only, bool):
             raise TypeError("local_only must be a bool")
+        if self.observer is not None and not isinstance(self.observer, LadderObserver):
+            raise TypeError("observer must implement LadderObserver")

@@ -26,12 +26,15 @@ class Step(StrEnum):
 class Attempt:
     """Record of one generation attempt.
 
-    ``step`` is the rung that produced ``raw_output``. ``repair_steps`` names the deterministic
+    ``step`` is the rung that took effect on ``raw_output``: ``GRAMMAR`` for a constrained
+    generation, ``REASK`` for a re-ask, ``FALLBACK`` for a cloud attempt, ``REPAIR`` for an
+    unconstrained first generation that the repair pipeline changed, and ``None`` for an
+    unconstrained generation that no rung touched. ``repair_steps`` names the deterministic
     repairs applied to it (in order) and ``errors`` holds the validation problems that remained
     after them; an empty ``errors`` means the attempt ended in a valid document.
     """
 
-    step: Step
+    step: Step | None
     raw_output: str
     repair_steps: tuple[str, ...] = ()
     errors: tuple[ValidationIssue, ...] = ()
@@ -47,7 +50,8 @@ class Result(Generic[T]):
     """A schema-valid value plus the story of how it was obtained.
 
     ``value`` is a model instance for Pydantic input and a ``dict`` for JSON Schema input.
-    ``path`` lists the ladder rungs that were used, in order. ``attempts`` records every
+    ``path`` lists the ladder rungs that actually took effect, each once, in order of first use;
+    it is empty when an unconstrained first output was valid as it was. ``attempts`` records every
     attempt, including failed ones.
     """
 

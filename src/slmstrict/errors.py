@@ -9,6 +9,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from slmstrict.result import Attempt
     from slmstrict.schema import ValidationIssue
 
 __all__ = [
@@ -30,9 +31,10 @@ class SchemaError(SlmStrictError):
 class ValidationFailed(SlmStrictError):  # noqa: N818 - public name fixed by the phase contract
     """The model output could not be brought into line with the schema.
 
-    ``issues`` holds the structured validation problems of the last attempt and ``last_output``
-    the raw text of that attempt, when available. Neither is part of ``str(error)``, so the
-    model output never leaks into logs through the exception message.
+    ``issues`` holds the structured validation problems of the last attempt, ``last_output`` the
+    raw text of that attempt and ``attempts`` the record of every attempt made (in order), when
+    available. None of them is part of ``str(error)``, so the model output never leaks into logs
+    through the exception message.
     """
 
     def __init__(
@@ -41,10 +43,12 @@ class ValidationFailed(SlmStrictError):  # noqa: N818 - public name fixed by the
         *,
         issues: tuple[ValidationIssue, ...] = (),
         last_output: str | None = None,
+        attempts: tuple[Attempt, ...] = (),
     ) -> None:
         super().__init__(message)
         self.issues = issues
         self.last_output = last_output
+        self.attempts = attempts
 
 
 class BackendError(SlmStrictError):
