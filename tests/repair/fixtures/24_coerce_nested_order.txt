@@ -1,0 +1,4 @@
+Order:
+```json
+{"customer": {"name": "Bo", "vip": "true"}, "items": [{"sku": "A1", "qty": "3"}, {"sku": "B2", "qty": "1"}], "status": "paid"}
+```

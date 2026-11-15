@@ -1,0 +1,17 @@
+{
+  "schema": "profile",
+  "note": "a cut-off string is closed; its content is not completed",
+  "ok": true,
+  "value": {
+    "name": "Ada",
+    "age": 36,
+    "active": true,
+    "tags": [
+      "math"
+    ],
+    "nickname": "the Countes"
+  },
+  "applied": [
+    "brackets"
+  ]
+}

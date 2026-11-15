@@ -1,0 +1,9 @@
+{
+  "schema": "profile",
+  "note": "user decision (review round 2): different blocks are never picked between",
+  "ok": false,
+  "failure": "multiple_blocks",
+  "issue_kinds": [
+    "multiple_blocks"
+  ]
+}

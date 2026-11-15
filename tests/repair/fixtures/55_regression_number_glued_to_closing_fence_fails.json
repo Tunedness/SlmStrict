@@ -1,0 +1,9 @@
+{
+  "schema": "optcount",
+  "note": "review round 2 MINOR: the value must not be silently dropped",
+  "ok": false,
+  "failure": "truncated_number",
+  "issue_kinds": [
+    "truncated_number"
+  ]
+}

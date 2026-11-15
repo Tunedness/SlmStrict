@@ -1,0 +1,12 @@
+{
+  "schema": "snippet",
+  "note": "",
+  "ok": true,
+  "value": {
+    "title": "t",
+    "code": "~~~py\nprint(1)\n~~~"
+  },
+  "applied": [
+    "fences"
+  ]
+}

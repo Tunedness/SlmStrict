@@ -1,0 +1,13 @@
+{
+  "schema": "count",
+  "note": "review round 2 MINOR: newline + fence after a number is not a truncation",
+  "ok": true,
+  "value": {
+    "label": "x",
+    "count": 12
+  },
+  "applied": [
+    "fences",
+    "brackets"
+  ]
+}

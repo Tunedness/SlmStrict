@@ -1,0 +1,16 @@
+{
+  "schema": "profile",
+  "note": "",
+  "ok": true,
+  "value": {
+    "name": "Ada",
+    "age": 36,
+    "active": true,
+    "tags": [
+      "math"
+    ]
+  },
+  "applied": [
+    "coercion"
+  ]
+}

@@ -1,0 +1,3 @@
+```json
+{"name": "Ada", "active": true, "tags": []}
+```

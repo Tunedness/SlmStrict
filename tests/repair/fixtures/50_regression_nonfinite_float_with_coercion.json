@@ -1,0 +1,9 @@
+{
+  "schema": "bigfloat",
+  "note": "review round 2 MAJOR: used to raise ValueError",
+  "ok": false,
+  "failure": "invalid_json",
+  "issue_kinds": [
+    "json_invalid"
+  ]
+}

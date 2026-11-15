@@ -1,0 +1,9 @@
+{
+  "schema": "profile",
+  "note": "age must not be invented",
+  "ok": false,
+  "failure": "schema_mismatch",
+  "issue_kinds": [
+    "missing"
+  ]
+}

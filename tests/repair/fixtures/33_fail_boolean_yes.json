@@ -1,0 +1,9 @@
+{
+  "schema": "profile",
+  "note": "only true/false are accepted as boolean text",
+  "ok": false,
+  "failure": "schema_mismatch",
+  "issue_kinds": [
+    "bool_type"
+  ]
+}

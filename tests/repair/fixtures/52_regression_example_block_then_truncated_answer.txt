@@ -1,0 +1,2 @@
+Example: {"name": "Veli", "age": 40}
+Answer: {"name": "Ali", "ag

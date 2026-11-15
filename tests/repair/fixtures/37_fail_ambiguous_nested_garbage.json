@@ -1,0 +1,6 @@
+{
+  "schema": "profile",
+  "note": "unbalanced garbage is not guessed at",
+  "ok": false,
+  "failure": "invalid_json"
+}

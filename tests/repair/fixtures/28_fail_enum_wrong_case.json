@@ -1,0 +1,9 @@
+{
+  "schema": "ticket",
+  "note": "no fuzzy enum matching, not even for case",
+  "ok": false,
+  "failure": "schema_mismatch",
+  "issue_kinds": [
+    "enum"
+  ]
+}

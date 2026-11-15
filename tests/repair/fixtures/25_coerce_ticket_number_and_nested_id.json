@@ -1,0 +1,17 @@
+{
+  "schema": "ticket",
+  "note": "",
+  "ok": true,
+  "value": {
+    "title": "Slow query",
+    "priority": "medium",
+    "estimate": 2.5,
+    "assignee": {
+      "name": "Cy",
+      "id": 7
+    }
+  },
+  "applied": [
+    "coercion"
+  ]
+}

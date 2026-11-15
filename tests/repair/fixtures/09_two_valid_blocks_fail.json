@@ -1,0 +1,9 @@
+{
+  "schema": "ticket",
+  "note": "even when both fit the schema",
+  "ok": false,
+  "failure": "multiple_blocks",
+  "issue_kinds": [
+    "multiple_blocks"
+  ]
+}

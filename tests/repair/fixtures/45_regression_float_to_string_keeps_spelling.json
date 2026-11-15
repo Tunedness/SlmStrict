@@ -1,0 +1,12 @@
+{
+  "schema": "priced",
+  "note": "review tur 1 MINOR: 1.50 must not become 1.5",
+  "ok": true,
+  "value": {
+    "sku": "A1",
+    "price": "1.50"
+  },
+  "applied": [
+    "coercion"
+  ]
+}

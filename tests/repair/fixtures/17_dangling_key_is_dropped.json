@@ -1,0 +1,16 @@
+{
+  "schema": "profile",
+  "note": "a key without a value is removed, not given one",
+  "ok": true,
+  "value": {
+    "name": "Ada",
+    "age": 36,
+    "active": true,
+    "tags": [
+      "a"
+    ]
+  },
+  "applied": [
+    "brackets"
+  ]
+}

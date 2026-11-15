@@ -1,0 +1,9 @@
+{
+  "schema": "profile",
+  "note": "",
+  "ok": false,
+  "failure": "schema_mismatch",
+  "issue_kinds": [
+    "int_type"
+  ]
+}

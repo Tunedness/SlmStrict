@@ -1,0 +1,3 @@
+```javascript
+{"name": "Ada", "age": 36, "active": true, "tags": ["math", "code"]}
+```

@@ -1,0 +1,9 @@
+{
+  "schema": "person",
+  "note": "review tur 1 BLOCKER 2: the inner object must not stand in for the answer",
+  "ok": false,
+  "failure": "schema_mismatch",
+  "issue_kinds": [
+    "missing"
+  ]
+}

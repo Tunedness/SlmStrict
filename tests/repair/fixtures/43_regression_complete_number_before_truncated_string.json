@@ -1,0 +1,12 @@
+{
+  "schema": "count",
+  "note": "",
+  "ok": true,
+  "value": {
+    "count": 12,
+    "label": "x"
+  },
+  "applied": [
+    "brackets"
+  ]
+}

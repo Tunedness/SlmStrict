@@ -1,0 +1,12 @@
+{
+  "schema": "count",
+  "note": "whitespace after the number: it was finished by the model",
+  "ok": true,
+  "value": {
+    "label": "x",
+    "count": 12
+  },
+  "applied": [
+    "brackets"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "ticket",
+  "note": "2. is the start of a number",
+  "ok": false,
+  "failure": "truncated_number",
+  "issue_kinds": [
+    "truncated_number"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "ticket",
+  "note": "",
+  "ok": true,
+  "value": {
+    "title": "T",
+    "priority": "low",
+    "labels": [
+      "a",
+      "b"
+    ]
+  },
+  "applied": [
+    "brackets"
+  ]
+}

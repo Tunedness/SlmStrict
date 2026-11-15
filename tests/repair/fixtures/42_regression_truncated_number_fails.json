@@ -1,0 +1,9 @@
+{
+  "schema": "count",
+  "note": "user decision: a number cut by the end of the text fails the repair (re-ask), the member is not dropped",
+  "ok": false,
+  "failure": "truncated_number",
+  "issue_kinds": [
+    "truncated_number"
+  ]
+}

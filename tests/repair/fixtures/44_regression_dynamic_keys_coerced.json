@@ -1,0 +1,14 @@
+{
+  "schema": "scores",
+  "note": "review tur 1 MINOR: keys must stay out of the step record",
+  "ok": true,
+  "value": {
+    "scores": {
+      "Ayse Yilmaz": 34,
+      "Veli": 7
+    }
+  },
+  "applied": [
+    "coercion"
+  ]
+}

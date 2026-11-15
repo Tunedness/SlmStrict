@@ -1,0 +1,1 @@
+{"customer": {"name": "Bo"}, "items": {"sku": "A1", "qty": 2}, "status": "new"}

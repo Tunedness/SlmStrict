@@ -1,0 +1,10 @@
+{
+  "schema": "snippet",
+  "note": "review tur 1 BLOCKER 1: valid JSON whose string holds a code fence",
+  "ok": true,
+  "value": {
+    "title": "t",
+    "code": "```py\nprint(1)\n```"
+  },
+  "applied": []
+}

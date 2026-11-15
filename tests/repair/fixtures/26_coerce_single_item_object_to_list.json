@@ -1,0 +1,20 @@
+{
+  "schema": "order",
+  "note": "the repair step adds nothing: vip stays absent and the model default applies at validation",
+  "ok": true,
+  "value": {
+    "customer": {
+      "name": "Bo"
+    },
+    "items": [
+      {
+        "sku": "A1",
+        "qty": 2
+      }
+    ],
+    "status": "new"
+  },
+  "applied": [
+    "coercion"
+  ]
+}

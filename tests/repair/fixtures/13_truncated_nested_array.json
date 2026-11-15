@@ -1,0 +1,16 @@
+{
+  "schema": "ticket",
+  "note": "",
+  "ok": true,
+  "value": {
+    "title": "Crash on save",
+    "priority": "high",
+    "labels": [
+      "bug",
+      "ui"
+    ]
+  },
+  "applied": [
+    "brackets"
+  ]
+}

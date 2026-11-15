@@ -1,0 +1,8 @@
+Example of the format:
+```json
+{"example": "not the answer"}
+```
+Actual answer:
+```json
+{"name": "Ada", "age": 36, "active": true, "tags": ["math", "code"]}
+```

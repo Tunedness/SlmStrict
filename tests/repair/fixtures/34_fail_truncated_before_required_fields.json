@@ -1,0 +1,9 @@
+{
+  "schema": "ticket",
+  "note": "",
+  "ok": false,
+  "failure": "schema_mismatch",
+  "issue_kinds": [
+    "required"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "person",
+  "note": "review round 2 MAJOR: the example must not be returned as the answer",
+  "ok": false,
+  "failure": "multiple_blocks",
+  "issue_kinds": [
+    "multiple_blocks"
+  ]
+}

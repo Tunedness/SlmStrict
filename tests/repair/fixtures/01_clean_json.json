@@ -1,0 +1,15 @@
+{
+  "schema": "profile",
+  "note": "already valid: no step may change anything",
+  "ok": true,
+  "value": {
+    "name": "Ada",
+    "age": 36,
+    "active": true,
+    "tags": [
+      "math",
+      "code"
+    ]
+  },
+  "applied": []
+}

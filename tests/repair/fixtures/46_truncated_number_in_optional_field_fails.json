@@ -1,0 +1,9 @@
+{
+  "schema": "optcount",
+  "note": "required or optional makes no difference",
+  "ok": false,
+  "failure": "truncated_number",
+  "issue_kinds": [
+    "truncated_number"
+  ]
+}

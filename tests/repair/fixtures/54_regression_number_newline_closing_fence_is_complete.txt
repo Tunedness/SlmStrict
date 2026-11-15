@@ -1,0 +1,3 @@
+```json
+{"label": "x", "count": 12
+```
