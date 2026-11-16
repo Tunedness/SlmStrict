@@ -1,0 +1,102 @@
+== Qwen3-4B / llamacpp
+============================= test session starts ==============================
+platform linux -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0
+rootdir: /app
+configfile: pyproject.toml
+plugins: respx-0.23.1, anyio-4.16.0, asyncio-1.5.0, cov-7.1.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 1 item
+
+tests/backends/test_llamacpp_integration.py .                            [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/backends/test_llamacpp_integration.py::test_grammar_constrained_output_passes_the_schema_without_repair
+============================== 1 passed in 5.34s ===============================
+
+== Qwen3-4B / onnx
+============================= test session starts ==============================
+platform linux -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0
+rootdir: /app
+configfile: pyproject.toml
+plugins: respx-0.23.1, anyio-4.16.0, asyncio-1.5.0, cov-7.1.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 2 items
+
+tests/backends/test_onnx_integration.py ..                               [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/backends/test_onnx_integration.py::test_generates_only_the_completion
+PASSED tests/backends/test_onnx_integration.py::test_rejects_grammar_constraint
+============================== 2 passed in 10.55s ==============================
+
+== Llama-3.2-3B / llamacpp
+============================= test session starts ==============================
+platform linux -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0
+rootdir: /app
+configfile: pyproject.toml
+plugins: respx-0.23.1, anyio-4.16.0, asyncio-1.5.0, cov-7.1.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 1 item
+
+tests/backends/test_llamacpp_integration.py .                            [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/backends/test_llamacpp_integration.py::test_grammar_constrained_output_passes_the_schema_without_repair
+============================== 1 passed in 3.84s ===============================
+
+== Llama-3.2-3B / onnx
+============================= test session starts ==============================
+platform linux -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0
+rootdir: /app
+configfile: pyproject.toml
+plugins: respx-0.23.1, anyio-4.16.0, asyncio-1.5.0, cov-7.1.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 2 items
+
+tests/backends/test_onnx_integration.py ..                               [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/backends/test_onnx_integration.py::test_generates_only_the_completion
+PASSED tests/backends/test_onnx_integration.py::test_rejects_grammar_constraint
+============================== 2 passed in 5.86s ===============================
+
+== Gemma-3-1B / llamacpp
+============================= test session starts ==============================
+platform linux -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0
+rootdir: /app
+configfile: pyproject.toml
+plugins: respx-0.23.1, anyio-4.16.0, asyncio-1.5.0, cov-7.1.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 1 item
+
+tests/backends/test_llamacpp_integration.py .                            [100%]
+
+==================================== PASSES ====================================
+_______ test_grammar_constrained_output_passes_the_schema_without_repair _______
+---------------------------- Captured stderr setup -----------------------------
+llama_kv_cache_iswa: using full-size SWA cache (ref: https://github.com/ggml-org/llama.cpp/pull/13194#issuecomment-2868343055)
+=========================== short test summary info ============================
+PASSED tests/backends/test_llamacpp_integration.py::test_grammar_constrained_output_passes_the_schema_without_repair
+============================== 1 passed in 1.94s ===============================
+
+== Gemma-3-1B / onnx
+============================= test session starts ==============================
+platform linux -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0
+rootdir: /app
+configfile: pyproject.toml
+plugins: respx-0.23.1, anyio-4.16.0, asyncio-1.5.0, cov-7.1.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 2 items
+
+tests/backends/test_onnx_integration.py ..                               [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/backends/test_onnx_integration.py::test_generates_only_the_completion
+PASSED tests/backends/test_onnx_integration.py::test_rejects_grammar_constraint
+============================== 2 passed in 3.98s ===============================
+

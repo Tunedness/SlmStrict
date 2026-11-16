@@ -10,7 +10,7 @@ SlmStrict is for developers who embed local language models in applications and 
 
 ## Project Status
 
-**Experimental.** The MVP is feature-complete, but no release has been published and the API can still change. The reference benchmark exists but has not been run yet; see [Benchmark](#benchmark).
+**Experimental.** The MVP is feature-complete, but no release has been published and the API can still change. The reference benchmark has been run once and several of its targets were missed; see [Benchmark](#benchmark).
 
 ## Installation
 
@@ -287,13 +287,27 @@ For OTLP export, install the `otel` extra and register `slmstrict.metrics.otel.O
 
 The reference benchmark (`bench/`) measures the PRD targets on Qwen3-4B, Llama-3.2-3B and Gemma-3-1B, on both backends, with 36 schema tasks in six categories. It needs real model files and is not run in CI; `bench/docker/run.sh` runs it, and the real-model integration tests, in a network-isolated Docker container.
 
-| Metric | Target | Result |
-| --- | --- | --- |
-| Schema pass rate, strict (raw model: typically 60-80%) | >= 95% | not run yet |
-| Extra latency on the grammar path | <= 15% | not run yet |
-| Fallback rate on the reference tasks | < 10% | not run yet |
+First run, 2026-11-16: arm64 Docker (Linux aarch64, 12 CPUs), CPU only, llama.cpp built with a fixed baseline (armv8.2-a with fp16 and dot product), Q4_K_M GGUF files and int4 ONNX files that are third-party conversions, temperature 0, one run per task and mode. The numbers hold for that setup only. The whole report, with the environment, revisions and per-category results, is in [bench/results/2026-11-16.md](bench/results/2026-11-16.md). The two real-model integration tests passed for all six model and backend combinations ([log](bench/results/integration-2026-11-16-2.log)).
 
-Nothing has been measured, so the table makes no claim. How to run it, and what it measures, is in [bench/README.md](bench/README.md). Results land in `bench/results/`.
+Targets: strict pass rate >= 95%, grammar-path overhead <= 15%, fallback rate < 10%. "Raw" is the model's output without SlmStrict; "strict" is the enforcement ladder with the cloud fallback replaced by a stub that only counts (nothing is sent anywhere).
+
+| Model | Backend | Raw pass | Strict pass | Fallback rate | Grammar overhead |
+| --- | --- | --- | --- | --- | --- |
+| Qwen3-4B | llama.cpp | 94.4% | 100.0% | 0.0% | **+25.1% (target missed)** |
+| Qwen3-4B | ONNX | 100.0% | 100.0% | 0.0% | n/a |
+| Llama-3.2-3B | llama.cpp | 22.2% | 100.0% | 0.0% | -4.5% (see below) |
+| Llama-3.2-3B | ONNX | 2.8% | **38.9% (target missed)** | **61.1% (target missed)** | n/a |
+| Gemma-3-1B | llama.cpp | 2.8% | 100.0% | 0.0% | -10.5% (see below) |
+| Gemma-3-1B | ONNX | 0.0% | **0.0% (target missed)** | **100.0% (target missed)** | n/a |
+
+What the numbers say, and what they do not:
+
+- **llama.cpp (grammar path).** All three models reach 100% strict pass with no fallback, from raw rates between 2.8% and 94.4%. The grammar-path overhead is above the limit for Qwen3-4B (+25.1%). For Llama-3.2-3B and Gemma-3-1B the total-time figure is negative only because the unconstrained model writes longer outputs (167 and 153 characters against 86 and 87 under the grammar); per output character the grammar call is 86.6% and 57.9% slower. So their "met" does not show that the overhead is within 15%: the comparison is not conclusive for them.
+- **ONNX (no grammar rung).** Qwen3-4B passes 100% without any rung. Llama-3.2-3B (38.9% strict, 61.1% fallback) and Gemma-3-1B (0% strict, 100% fallback) miss the targets by a wide margin; their raw outputs are almost never valid either.
+- **Known limitation, under investigation.** A possible cause for the low ONNX rates is how the ONNX path feeds the prompt: `OnnxBackend` applies no chat template of its own, and the benchmark wraps the prompt in the model's template as plain text. Whether the ONNX tokenizer turns that text (the model's special tokens and the start-of-sequence token) into the right token ids has not been checked. This is a hypothesis, not a diagnosis; Qwen3-4B, which needs no start-of-sequence token, works on the same path. Until it is resolved, read the Llama and Gemma ONNX rows as a property of this setup and not of the models.
+- Only schema validity is measured, not whether the values are correct. The ONNX files come from different converters with different quantizations, so ONNX rows of different models are not directly comparable.
+
+How to run it, and what it measures, is in [bench/README.md](bench/README.md).
 
 ## Contributing
 

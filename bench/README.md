@@ -2,7 +2,7 @@
 
 The benchmark measures the success metrics of the PRD (section 6) on a reference set of small models, on both backends, and writes the result as a Markdown report. It needs real model files and is not part of CI. The supported way to run it is the Docker setup in `bench/docker/`.
 
-No benchmark result has been recorded yet. `bench/results/` holds only a `.gitkeep` until someone runs it.
+The first run (2026-11-16, arm64 Docker) is in `bench/results/2026-11-16.md`; the root README summarizes it, including the targets that were missed.
 
 ## What it measures
 
@@ -55,7 +55,7 @@ bench/docker/run.sh run          # stage 2: benchmark, then both integration tes
 - **build.** `docker build -f bench/docker/Dockerfile`. Python 3.12, `uv sync --locked --extra llamacpp --extra onnx`, CPU-only llama.cpp built from source with a fixed CPU baseline (`GGML_NATIVE=OFF`: armv8.2-a with fp16 and dot product on arm64, AVX2/FMA/F16C on amd64), because native CPU detection breaks the arm64 build with the image's gcc 12. The base image is pinned by digest and `uv` by version, the image runs as a non-root user by default, and it holds the repository and the dependencies, never model weights. Because of the baseline the llama.cpp build does not use newer CPU extensions (i8mm, SVE, AVX-512), so absolute speeds are lower than a native build; the raw-versus-grammar comparison is made inside one build and is not affected.
 - **download (stage 1).** The only stage with network access, and it runs nothing but `bench/docker/download_models.py`. It writes the models to the named volume `slmstrict-models` (`<model>/gguf/`, `<model>/onnx/`, `<model>/manifest.json`). It is safe to repeat: finished files are kept, interrupted ones resume, every large file is checked against the SHA-256 the Hub publishes and every small one (configs, tokenizer files) against its git blob id. The commit that was resolved and the checksums are written to `<model>/manifest.json`, and the benchmark report's `Models` table shows the commit and the main file's checksum (`Revision`), because the source repositories float on `main` and can change between two runs. Useful arguments: `--only NAME`, `--verify` (re-hash existing files), `--list`.
 - **run (stage 2).** `--network none`; the repository is mounted read-only, the models volume is read-only, and only `bench/results/` is writable (plus a 256 MB tmpfs). Memory is capped at 6 GB with swap disabled (`SLMSTRICT_BENCH_MEMORY` changes it), capabilities are dropped, and the container runs as your user so the reports belong to you. The benchmark loads the models one after another and releases each before the next. `bench` and `integration` run the two parts separately; `bench` accepts the options of `python -m bench` (for example `--limit 4 --model Gemma-3-1B`).
-- **Results.** `bench/results/<date>.md` (the report) and `bench/results/integration-<date>.log` (full pytest output of the six integration runs: llama.cpp and ONNX for each model). Paste the integration summary into the report's `Integration tests` section.
+- **Results.** `bench/results/<date>.md` (the report) and `bench/results/integration-<date>.log` (full pytest output of the six integration runs: llama.cpp and ONNX for each model). After the tests, `integration.py` replaces the `Integration tests` section of the newest report of the same day with the exit code and test counts per model and format (with no report, only the log is written); `run.sh run` therefore fills the section, and running `run.sh integration` later does too.
 
 ### The models
 
@@ -142,7 +142,7 @@ To compare runs, keep `temperature = 0.0` and the `seed`, and record the library
 
 ## Integration tests on the host
 
-Two real-model integration tests belong to the same environment. They are excluded from the default `pytest` run and are skipped when their variable is unset. Run them with the same model files as the benchmark, and paste the result into the `Integration tests` section of the report:
+Two real-model integration tests belong to the same environment. They are excluded from the default `pytest` run and are skipped when their variable is unset. Run them with the same model files as the benchmark. (In the container, `run.sh integration` does this for you and writes the results into the report; on the host, paste them into the `Integration tests` section of the report yourself.)
 
 ```bash
 SLMSTRICT_GGUF_PATH=/path/to/model.gguf \

@@ -278,13 +278,29 @@ def _models_rows(run: BenchmarkRun) -> list[list[str]]:
     ]
 
 
+def _duration(seconds: float) -> str:
+    whole = round(seconds)
+    hours, rest = divmod(whole, 3600)
+    minutes, secs = divmod(rest, 60)
+    return f"{hours}h {minutes:02d}m {secs:02d}s" if hours else f"{minutes}m {secs:02d}s"
+
+
+def _timing(run: BenchmarkRun) -> str:
+    text = f"started {run.started_at.isoformat(timespec='seconds')}"
+    if run.finished_at is not None:
+        text += f", finished {run.finished_at.isoformat(timespec='seconds')}"
+    if run.duration_s is not None:
+        text += f" (took {_duration(run.duration_s)})"
+    return text
+
+
 def render_report(run: BenchmarkRun) -> str:
     """The whole report as Markdown."""
     date = run.started_at.date().isoformat()
     out: list[str] = [f"# SlmStrict benchmark - {date}", ""]
     out.append(
         f"Measured {run.task_count} tasks per cell (task set sha256 `{run.task_digest[:16]}`), "
-        f"started {run.started_at.isoformat(timespec='seconds')}. "
+        f"{_timing(run)}. "
         "Produced by `uv run python -m bench`; this is not a CI job and the numbers hold for the "
         "machine described below only."
     )
@@ -409,7 +425,8 @@ def render_report(run: BenchmarkRun) -> str:
         "- `uv run --extra onnx pytest -m integration "
         "tests/backends/test_onnx_integration.py` (`SLMSTRICT_ONNX_MODEL_DIR`)",
         "",
-        "Result: not recorded by the benchmark.",
+        "Result: not recorded by `python -m bench`. `bench/docker/run.sh integration` runs the "
+        "tests and replaces this section in the newest report of the same day with their results.",
         "",
         "## Notes",
         "",

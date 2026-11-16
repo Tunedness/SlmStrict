@@ -19,6 +19,7 @@ from typing import Any
 
 import pytest
 from bench.docker import download_models as dl
+from bench.docker import integration as it
 from bench.docker.integration import plan_runs
 from bench.runner import REFERENCE_MODELS, load_config
 
@@ -514,3 +515,137 @@ def test_authorization_survives_a_redirect_only_to_the_same_origin(
     redirected = handler.redirect_request(request, None, 302, "Found", {}, new)  # type: ignore[arg-type]
     assert redirected is not None
     assert redirected.has_header("Authorization") is kept
+
+
+# -- integration results in the report --------------------------------------------------------
+
+REPORT_WITH_PLACEHOLDER = """# SlmStrict benchmark - 2026-11-16
+
+## Results
+
+table
+
+## Integration tests
+
+Result: not recorded by the benchmark.
+
+## Notes
+
+- a note
+"""
+
+
+def test_parse_counts_reads_the_closing_line() -> None:
+    out = "....\n=========================== 2 passed in 10.48s ===========================\n"
+    assert it.parse_counts(out) == "2 passed"
+    mixed = "== 1 failed, 3 passed, 1 skipped in 2.00s ==\n"
+    assert it.parse_counts(mixed) == "1 failed, 3 passed, 1 skipped"
+    assert it.parse_counts("Traceback ...\n") == "no test summary"
+
+
+def test_latest_report_picks_the_newest_of_the_day(tmp_path: Path) -> None:
+    import datetime as dt
+
+    day = dt.date(2026, 11, 16)
+    assert it.latest_report(tmp_path, day) is None
+    for name in ("2026-11-16.md", "2026-11-16-2.md", "2026-11-16-10.md", "2026-11-17.md"):
+        (tmp_path / name).write_text("x")
+    (tmp_path / "integration-2026-11-16.log").write_text("x")
+    assert it.latest_report(tmp_path, day) == tmp_path / "2026-11-16-10.md"
+
+
+def test_update_report_replaces_only_the_integration_section(tmp_path: Path) -> None:
+    import datetime as dt
+
+    runs = plan_runs(load_config(DOCKER / "models.container.toml"))
+    results = [it.RunResult(run, 0, "1 passed") for run in runs[:2]]
+    section = it.render_section(results, "integration-2026-11-16.log", dt.datetime.now())
+    report = tmp_path / "2026-11-16.md"
+    report.write_text(REPORT_WITH_PLACEHOLDER)
+
+    it.update_report(report, section)
+    once = report.read_text()
+    it.update_report(report, section)  # idempotent
+
+    assert report.read_text() == once
+    assert "not recorded" not in once
+    assert "| Qwen3-4B | llamacpp | 0 | 1 passed |" in once
+    assert "`integration-2026-11-16.log`" in once
+    assert once.startswith("# SlmStrict benchmark - 2026-11-16\n\n## Results\n\ntable\n\n")
+    assert once.endswith("## Notes\n\n- a note\n")  # the sections around it are untouched
+    assert once.count("## Integration tests") == 1
+
+
+def test_update_report_appends_the_section_when_it_is_missing(tmp_path: Path) -> None:
+    import datetime as dt
+
+    report = tmp_path / "r.md"
+    report.write_text("# T\n\n## Results\n\nx\n")
+    it.update_report(report, it.render_section([], "l.log", dt.datetime.now()))
+    assert report.read_text().count("## Integration tests") == 1
+    assert report.read_text().startswith("# T\n\n## Results\n\nx\n\n## Integration tests")
+
+
+def _fake_pytest(monkeypatch: pytest.MonkeyPatch, failing: str | None = None) -> None:
+    def fake_run(command: list[str], **kwargs: Any) -> subprocess.CompletedProcess[str]:
+        target = command[-1]
+        code = 1 if failing and failing in target else 0
+        word = "failed" if code else "passed"
+        return subprocess.CompletedProcess(command, code, f"== 1 {word} in 0.10s ==\n", "")
+
+    monkeypatch.setattr(it.subprocess, "run", fake_run)
+
+
+def test_main_writes_the_log_and_fills_todays_report(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    import datetime as dt
+
+    results = tmp_path / "bench" / "results"
+    results.mkdir(parents=True)
+    today = dt.date.today().isoformat()
+    (results / f"{today}.md").write_text(REPORT_WITH_PLACEHOLDER)
+    monkeypatch.setattr(it, "ROOT", tmp_path)
+    _fake_pytest(monkeypatch)
+
+    code = it.main([str(DOCKER / "models.container.toml")])
+
+    assert code == 0
+    assert (results / f"integration-{today}.log").read_text().count("1 passed") == 6
+    text = (results / f"{today}.md").read_text()
+    assert text.count("| 0 | 1 passed |") == 6
+    assert "not recorded" not in text
+    assert "Integration tests section updated" in capsys.readouterr().out
+
+
+def test_main_without_a_report_writes_only_the_log_and_reports_failures(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    results = tmp_path / "bench" / "results"
+    results.mkdir(parents=True)
+    monkeypatch.setattr(it, "ROOT", tmp_path)
+    _fake_pytest(monkeypatch, failing="onnx")
+
+    code = it.main([str(DOCKER / "models.container.toml")])
+
+    assert code == 1
+    assert [p.suffix for p in results.iterdir()] == [".log"]
+    assert "only the log was written" in capsys.readouterr().out
+
+
+def test_a_failing_run_shows_its_exit_code_in_the_report(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    import datetime as dt
+
+    results = tmp_path / "bench" / "results"
+    results.mkdir(parents=True)
+    today = dt.date.today().isoformat()
+    (results / f"{today}.md").write_text(REPORT_WITH_PLACEHOLDER)
+    monkeypatch.setattr(it, "ROOT", tmp_path)
+    _fake_pytest(monkeypatch, failing="onnx")
+
+    assert it.main([str(DOCKER / "models.container.toml")]) == 1
+
+    text = (results / f"{today}.md").read_text()
+    assert "| Gemma-3-1B | onnx | 1 | 1 failed |" in text

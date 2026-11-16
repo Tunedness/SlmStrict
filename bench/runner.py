@@ -477,12 +477,17 @@ class CellResult:
 
 @dataclass(frozen=True, slots=True)
 class BenchmarkRun:
+    """A finished run. ``started_at`` is taken when the run begins, ``finished_at`` and
+    ``duration_s`` (measured with a monotonic clock) when its last cell is done."""
+
     started_at: datetime
     environment: Mapping[str, str]
     settings: Settings
     task_count: int
     task_digest: str
     cells: tuple[CellResult, ...]
+    finished_at: datetime | None = None
+    duration_s: float | None = None
 
 
 def _is_valid_raw(schema: Schema[Any], text: str) -> bool:
@@ -682,6 +687,8 @@ async def run_benchmark(
     """
     if len(tasks) < 2:
         raise BenchError("at least 2 tasks are needed so consecutive calls never share a prompt")
+    started_at = datetime.now().astimezone()
+    started = time.perf_counter()
     selected = [spec for spec in config.models if models is None or spec.name in models]
     cells: list[CellResult] = []
     for spec in selected:
@@ -689,12 +696,14 @@ async def run_benchmark(
             cell = await _run_model_on_backend(spec, backend_name, config, tasks, factory, progress)
             cells.append(cell)
     return BenchmarkRun(
-        started_at=datetime.now().astimezone(),
+        started_at=started_at,
         environment=collect_environment(config.settings),
         settings=config.settings,
         task_count=len(tasks),
         task_digest=tasks_digest(tasks),
         cells=tuple(cells),
+        finished_at=datetime.now().astimezone(),
+        duration_s=time.perf_counter() - started,
     )
 
 

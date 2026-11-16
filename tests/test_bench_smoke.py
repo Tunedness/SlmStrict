@@ -6,12 +6,13 @@ needs model files and is described in ``bench/README.md``.
 
 from __future__ import annotations
 
+import asyncio
 import contextlib
 import io
 import json
 import re
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -422,6 +423,45 @@ def test_environment_says_so_when_the_build_is_not_recorded(
 
     monkeypatch.setenv("SLMSTRICT_LLAMA_BUILD_FILE", str(tmp_path / "missing.txt"))
     assert collect_environment(Settings())["llama.cpp build flags"].startswith("not recorded")
+
+
+async def test_the_run_records_when_it_started_and_when_it_finished(tmp_path: Path) -> None:
+    config = load_config(_write_fixture(tmp_path, models=("Gemma-3-1B",)))
+    tasks = load_tasks(tmp_path / "tasks")
+    first_backend_built: list[datetime] = []
+
+    class SlowBackend(_ConstantBackend):
+        async def agenerate(self, prompt: str, *, constraint: object = None) -> str:
+            await asyncio.sleep(0.02)
+            return await super().agenerate(prompt, constraint=constraint)
+
+    def factory(spec: ModelSpec, backend: str, settings: Settings) -> Backend:
+        first_backend_built.append(datetime.now().astimezone())
+        return SlowBackend()  # type: ignore[return-value]
+
+    before = datetime.now().astimezone()
+    run = await run_benchmark(config, tasks, backends=("onnx",), factory=factory)
+    after = datetime.now().astimezone()
+
+    assert run.finished_at is not None
+    assert run.duration_s is not None
+    # The start is taken when the run begins, before any backend exists; the end afterwards.
+    assert before <= run.started_at <= first_backend_built[0]
+    assert run.started_at < run.finished_at <= after
+    assert run.duration_s >= 0.04  # 2 tasks x 2 modes x 0.02 s
+    assert run.finished_at - run.started_at >= timedelta(seconds=0.04)
+
+    text = render_report(run)
+    assert f"started {run.started_at.isoformat(timespec='seconds')}, finished " in text
+    assert "(took " in text
+
+
+def test_report_header_without_an_end_time_still_says_only_what_is_known() -> None:
+    cell = CellResult("Fake", "onnx", None, "ok", records=(_record(grammar_decode_seconds=None),))
+    run = BenchmarkRun(datetime.now().astimezone(), {}, Settings(), 1, "0" * 64, (cell,))
+    header = render_report(run).splitlines()[2]
+    assert "started " in header
+    assert "finished" not in header
 
 
 def test_missed_targets_flags_grammar_overhead_above_the_limit() -> None:
