@@ -243,11 +243,19 @@ class Ladder:
         try:
             handled = await handler.handle(schema, prompt, tuple(run.attempts))
         except Exception as exc:
+            # A handler that got a (paid) answer it could not use may attach what it cost to the
+            # exception it raises (``usage``, ``provider``, ``model``); pass that on to observers.
+            exc_usage = getattr(exc, "usage", None)
+            exc_provider = getattr(exc, "provider", None)
+            exc_model = getattr(exc, "model", None)
             self._fallback_event(
                 run,
                 FallbackStatus.FAILED,
                 attempts_before,
                 duration_s=time.perf_counter() - started,
+                usage=exc_usage if isinstance(exc_usage, TokenUsage) else None,
+                provider=exc_provider if isinstance(exc_provider, str) else None,
+                model=exc_model if isinstance(exc_model, str) else None,
                 error_type=type(exc).__name__,
             )
             raise

@@ -278,6 +278,43 @@ async def test_handler_value_that_does_not_match_the_schema_is_rejected() -> Non
     assert fallback.status is FallbackStatus.FAILED
 
 
+class _PaidValidationFailure(ValidationFailed):
+    """A handler's failure that knows what the rejected call cost (duck-typed contract)."""
+
+    def __init__(self, usage: TokenUsage, provider: str, model: str) -> None:
+        super().__init__("the provider answered with an unusable value")
+        self.usage = usage
+        self.provider = provider
+        self.model = model
+
+
+async def test_usage_attached_to_a_handler_exception_reaches_the_fallback_event() -> None:
+    usage = TokenUsage(input_tokens=80, output_tokens=9)
+    observer = RecordingObserver()
+    handler = SpyHandler(error=_PaidValidationFailure(usage, "p", "m"))
+    with pytest.raises(_PaidValidationFailure):
+        await Ladder(FakeBackend([GARBAGE] * 3), _with_fallback(handler, observer=observer)).run(
+            SCHEMA, "p"
+        )
+    fallback = next(e for e in observer.events if isinstance(e, FallbackEvent))
+    assert fallback.status is FallbackStatus.FAILED
+    assert fallback.error_type == "_PaidValidationFailure"
+    assert fallback.usage == usage
+    assert (fallback.provider, fallback.model) == ("p", "m")
+
+
+async def test_a_plain_handler_exception_reports_no_usage() -> None:
+    observer = RecordingObserver()
+    handler = SpyHandler(error=RuntimeError("boom"))
+    with pytest.raises(RuntimeError):
+        await Ladder(FakeBackend([GARBAGE] * 3), _with_fallback(handler, observer=observer)).run(
+            SCHEMA, "p"
+        )
+    fallback = next(e for e in observer.events if isinstance(e, FallbackEvent))
+    assert fallback.usage is None
+    assert (fallback.provider, fallback.model) == (None, None)
+
+
 async def test_rejected_fallback_value_still_reports_usage_and_attempts() -> None:
     usage = TokenUsage(input_tokens=50, output_tokens=7)
     bad = FallbackResult(

@@ -136,7 +136,8 @@ class FallbackStatus(StrEnum):
 
     FAILED = "failed"
     """The handler was called and raised, or returned a value that does not match the schema
-    (``usage``, ``provider`` and ``model`` are still reported in the second case)."""
+    (``usage``, ``provider`` and ``model`` are still reported in the second case, and in the first
+    when the raised exception carries them as ``usage``, ``provider`` and ``model`` attributes)."""
 
     DISABLED_LOCAL_ONLY = "disabled_local_only"
     """The fallback was needed but ``local_only`` is on; the handler was not called."""
@@ -193,8 +194,9 @@ class FallbackEvent:
     Emitted exactly once per run in which that happens, whatever the decision (see
     :class:`FallbackStatus`); a run that succeeds locally emits none. ``attempts_before`` is the
     number of local attempts made. ``duration_s``, ``usage``, ``provider`` and ``model`` are only
-    set when the handler was called and returned a :class:`FallbackResult` (``duration_s`` is set
-    whenever it was called). ``error_type`` is the class name of the failure for ``FAILED``.
+    set when the handler was called and returned a :class:`FallbackResult` or raised an exception
+    that carries them (``duration_s`` is set whenever it was called). ``error_type`` is the class
+    name of the failure for ``FAILED``.
     """
 
     run_id: str

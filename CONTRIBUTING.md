@@ -21,7 +21,7 @@ Clone the repository and install dependencies:
 ```bash
 git clone https://github.com/Tunedness/SlmStrict.git
 cd SlmStrict
-uv sync
+uv sync --locked --extra otel --extra anthropic --extra openai --extra gemini
 ```
 
 ## Running Tests
