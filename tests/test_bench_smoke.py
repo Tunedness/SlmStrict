@@ -10,6 +10,7 @@ import contextlib
 import io
 import json
 import re
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -32,6 +33,7 @@ from bench.runner import (
     Settings,
     Task,
     TaskRecord,
+    collect_environment,
     load_config,
     load_tasks,
     read_revision,
@@ -383,6 +385,43 @@ def test_read_revision_is_none_without_a_usable_manifest(tmp_path: Path) -> None
     assert read_revision(tmp_path / "onnx", "onnx") is None
     (tmp_path / "manifest.json").write_text('{"onnx": {"commit": 1}}')
     assert read_revision(tmp_path / "onnx", "onnx") is None
+
+
+def test_environment_records_the_llama_build_flags_and_system_info(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    flags = tmp_path / "flags.txt"
+    flags.write_text("-DGGML_NATIVE=OFF -DGGML_CPU_ARM_ARCH=armv8.2-a+fp16+dotprod\n")
+    monkeypatch.setenv("SLMSTRICT_LLAMA_BUILD_FILE", str(flags))
+
+    class FakeLlamaCpp:
+        @staticmethod
+        def llama_print_system_info() -> bytes:
+            return b"CPU : NEON = 1 | ARM_FMA = 1 |\n DOTPROD = 1 |"
+
+    monkeypatch.setitem(sys.modules, "llama_cpp", FakeLlamaCpp)
+
+    environment = collect_environment(Settings())
+
+    assert environment["llama.cpp build flags"] == (
+        "-DGGML_NATIVE=OFF -DGGML_CPU_ARM_ARCH=armv8.2-a+fp16+dotprod"
+    )
+    assert environment["llama.cpp system info"] == "CPU : NEON = 1 | ARM_FMA = 1 | DOTPROD = 1 |"
+
+
+def test_environment_says_so_when_the_build_is_not_recorded(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    monkeypatch.delenv("SLMSTRICT_LLAMA_BUILD_FILE", raising=False)
+    monkeypatch.setitem(sys.modules, "llama_cpp", None)  # an import of it fails
+
+    environment = collect_environment(Settings())
+
+    assert environment["llama.cpp build flags"].startswith("not recorded")
+    assert environment["llama.cpp system info"].startswith("not available")
+
+    monkeypatch.setenv("SLMSTRICT_LLAMA_BUILD_FILE", str(tmp_path / "missing.txt"))
+    assert collect_environment(Settings())["llama.cpp build flags"].startswith("not recorded")
 
 
 def test_missed_targets_flags_grammar_overhead_above_the_limit() -> None:

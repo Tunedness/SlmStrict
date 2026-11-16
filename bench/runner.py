@@ -789,6 +789,39 @@ def _package_version(name: str) -> str:
         return "not installed"
 
 
+BUILD_FILE_ENV: Final = "SLMSTRICT_LLAMA_BUILD_FILE"
+
+
+def _llama_build_flags() -> str:
+    """The CMake arguments llama.cpp was built with, when the image recorded them.
+
+    ``bench/docker/Dockerfile`` writes them to a file and names it in the environment variable
+    ``SLMSTRICT_LLAMA_BUILD_FILE``.
+    """
+    name = os.environ.get(BUILD_FILE_ENV)
+    if not name:
+        return "not recorded (llama.cpp was not built by bench/docker)"
+    try:
+        return Path(name).read_text(encoding="utf-8").strip() or "not recorded (empty file)"
+    except OSError:
+        return "not recorded (build file unreadable)"
+
+
+def _llama_system_info() -> str:
+    """What the loaded llama.cpp reports about itself (CPU features it was built with).
+
+    ``llama_print_system_info`` works without loading a model. It is the evidence that a build
+    flag took effect: a baseline that was silently ignored shows up as a missing feature.
+    """
+    try:
+        module = importlib.import_module("llama_cpp")
+        info = module.llama_print_system_info()
+    except Exception:
+        return "not available (llama-cpp-python is not usable here)"
+    text = info.decode("utf-8", "replace") if isinstance(info, bytes) else str(info)
+    return " ".join(text.split()) or "not available (empty)"
+
+
 def collect_environment(settings: Settings) -> dict[str, str]:
     """Hardware, OS and library versions of this run (written at the top of the report)."""
     return {
@@ -798,6 +831,8 @@ def collect_environment(settings: Settings) -> dict[str, str]:
         "Python": sys.version.split()[0],
         "slmstrict": __version__,
         "llama-cpp-python": _package_version("llama-cpp-python"),
+        "llama.cpp build flags": _llama_build_flags(),
+        "llama.cpp system info": _llama_system_info(),
         "onnxruntime-genai": _package_version("onnxruntime-genai"),
         "max_tokens / max_length": f"{settings.max_tokens} / {settings.max_length}",
         "temperature / seed": f"{settings.temperature} / {settings.seed}",

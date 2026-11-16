@@ -82,6 +82,20 @@ def test_dockerfile_keeps_weights_out_and_installs_both_extras() -> None:
     dockerfile = (DOCKER / "Dockerfile").read_text(encoding="utf-8")
     assert "python:3.12" in dockerfile
     assert "uv sync --locked --extra llamacpp --extra onnx" in dockerfile
+    # The baseline is recorded for the report and its effect is printed during the build.
+    assert "/opt/llama-build-flags.txt" in dockerfile
+    # An assignment in front of a command lasts for that command only: the file must be written
+    # from a shell variable, not from CMAKE_ARGS (which was empty there once), and checked.
+    assert 'echo "$CMAKE_ARGS"' not in dockerfile
+    assert 'echo "$cmake_args" > /opt/llama-build-flags.txt' in dockerfile
+    assert "test -s /opt/llama-build-flags.txt" in dockerfile
+    assert "SLMSTRICT_LLAMA_BUILD_FILE=" in dockerfile
+    assert "llama_print_system_info" in dockerfile
+    # CPU build with a fixed baseline: GGML_NATIVE detection breaks the arm64 build with gcc 12.
+    assert "-DGGML_NATIVE=OFF" in dockerfile
+    assert "-DGGML_CPU_ARM_ARCH=armv8.2-a+fp16" in dockerfile
+    assert "-DGGML_AVX2=ON" in dockerfile
+    assert "-DGGML_CUDA=OFF" in dockerfile
     # Inputs are pinned: the base image by digest, uv by version, and the image is not root.
     assert re.search(r"^FROM python:3\.12-slim-bookworm@sha256:[0-9a-f]{64}$", dockerfile, re.M)
     assert re.search(r"pip install uv==\d+\.\d+\.\d+", dockerfile)
