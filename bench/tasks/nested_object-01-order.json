@@ -1,0 +1,55 @@
+{
+  "id": "nested_object-01-order",
+  "category": "nested_object",
+  "prompt": "Build the order record: 'Order for Priya Nair (priya.nair@example.com), ship to 22 Elm Street, Leeds, LS1 4AB, United Kingdom.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "customer": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email"
+        ],
+        "additionalProperties": false
+      },
+      "shipping_address": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "postal_code": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "street",
+          "city",
+          "postal_code",
+          "country"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "customer",
+      "shipping_address"
+    ],
+    "additionalProperties": false
+  }
+}

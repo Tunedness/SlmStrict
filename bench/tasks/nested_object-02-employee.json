@@ -1,0 +1,51 @@
+{
+  "id": "nested_object-02-employee",
+  "category": "nested_object",
+  "prompt": "Build the employee record: 'Tomas Berg is a Senior Engineer in the Platform department. His manager is Ines Duarte (ines.duarte@example.com).'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "position": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "department": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "department"
+        ],
+        "additionalProperties": false
+      },
+      "manager": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "name",
+      "position",
+      "manager"
+    ],
+    "additionalProperties": false
+  }
+}

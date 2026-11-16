@@ -1,0 +1,25 @@
+{
+  "id": "numeric-06-percent_change",
+  "category": "numeric",
+  "prompt": "Revenue grew from 80000 to 92000. Return the old value, the new value and the percent change.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "old_value": {
+        "type": "number"
+      },
+      "new_value": {
+        "type": "number"
+      },
+      "change_percent": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "old_value",
+      "new_value",
+      "change_percent"
+    ],
+    "additionalProperties": false
+  }
+}

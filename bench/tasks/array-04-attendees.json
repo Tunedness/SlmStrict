@@ -1,0 +1,34 @@
+{
+  "id": "array-04-attendees",
+  "category": "array",
+  "prompt": "Extract the attendees: 'Lena is coming, Marcus declined, Aiko is coming, Samuel declined.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "attendees": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "rsvp": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "name",
+            "rsvp"
+          ],
+          "additionalProperties": false
+        },
+        "minItems": 1
+      }
+    },
+    "required": [
+      "attendees"
+    ],
+    "additionalProperties": false
+  }
+}

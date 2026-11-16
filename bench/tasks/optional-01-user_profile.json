@@ -1,0 +1,26 @@
+{
+  "id": "optional-01-user_profile",
+  "category": "optional",
+  "prompt": "Build the profile: 'Username: nightowl42. Website: https://nightowl.example.' Do not invent any missing field.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "username": {
+        "type": "string"
+      },
+      "bio": {
+        "type": "string"
+      },
+      "website": {
+        "type": "string"
+      },
+      "age": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "username"
+    ],
+    "additionalProperties": false
+  }
+}

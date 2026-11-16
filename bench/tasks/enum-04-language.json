@@ -1,0 +1,28 @@
+{
+  "id": "enum-04-language",
+  "category": "enum",
+  "prompt": "Detect the language of this text and whether the register is formal: 'Sehr geehrte Frau Schmidt, vielen Dank fuer Ihre schnelle Antwort.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "language_code": {
+        "type": "string",
+        "enum": [
+          "en",
+          "tr",
+          "de",
+          "fr",
+          "es"
+        ]
+      },
+      "is_formal": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "language_code",
+      "is_formal"
+    ],
+    "additionalProperties": false
+  }
+}

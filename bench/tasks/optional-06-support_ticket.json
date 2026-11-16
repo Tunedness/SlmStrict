@@ -1,0 +1,23 @@
+{
+  "id": "optional-06-support_ticket",
+  "category": "optional",
+  "prompt": "Build the ticket: 'Subject: refund not received. Order id 88213.' Do not invent any missing field.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "subject": {
+        "type": "string"
+      },
+      "order_id": {
+        "type": "string"
+      },
+      "attachment_name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "subject"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "flat_object-06-person",
+  "category": "flat_object",
+  "prompt": "Extract the person: 'Marta Kowalski is 41 years old and lives in Gdansk.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "first_name": {
+        "type": "string"
+      },
+      "last_name": {
+        "type": "string"
+      },
+      "age": {
+        "type": "integer"
+      },
+      "city": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "first_name",
+      "last_name",
+      "age",
+      "city"
+    ],
+    "additionalProperties": false
+  }
+}

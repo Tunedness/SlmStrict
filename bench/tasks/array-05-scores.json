@@ -1,0 +1,25 @@
+{
+  "id": "array-05-scores",
+  "category": "array",
+  "prompt": "Extract the exam scores: 'Quiz results: 72, 88, 95, 61, 79.' Return the student group name 'Group B' as well.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "group": {
+        "type": "string"
+      },
+      "scores": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 1
+      }
+    },
+    "required": [
+      "group",
+      "scores"
+    ],
+    "additionalProperties": false
+  }
+}

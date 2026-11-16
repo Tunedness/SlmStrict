@@ -1,0 +1,21 @@
+{
+  "id": "numeric-03-distance",
+  "category": "numeric",
+  "prompt": "Convert 42.195 kilometers to miles (1 mile is 1.609344 km). Return both distances.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "distance_km": {
+        "type": "number"
+      },
+      "distance_miles": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "distance_km",
+      "distance_miles"
+    ],
+    "additionalProperties": false
+  }
+}

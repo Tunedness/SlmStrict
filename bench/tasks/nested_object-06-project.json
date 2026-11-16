@@ -1,0 +1,68 @@
+{
+  "id": "nested_object-06-project",
+  "category": "nested_object",
+  "prompt": "Build the project record: 'Project Lighthouse is owned by Chen Wei (Product Lead), runs from 2027-02-01 to 2027-07-31 with a budget of 85000 EUR.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "owner": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "role"
+        ],
+        "additionalProperties": false
+      },
+      "schedule": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ],
+        "additionalProperties": false
+      },
+      "budget": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount",
+          "currency"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "name",
+      "owner",
+      "schedule",
+      "budget"
+    ],
+    "additionalProperties": false
+  }
+}

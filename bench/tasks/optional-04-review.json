@@ -1,0 +1,25 @@
+{
+  "id": "optional-04-review",
+  "category": "optional",
+  "prompt": "Build the review: 'Rating 4 out of 5. The delivery was fast.' Do not invent any missing field.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "rating": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      },
+      "title": {
+        "type": "string"
+      },
+      "comment": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "rating"
+    ],
+    "additionalProperties": false
+  }
+}

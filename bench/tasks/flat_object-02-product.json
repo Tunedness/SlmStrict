@@ -1,0 +1,29 @@
+{
+  "id": "flat_object-02-product",
+  "category": "flat_object",
+  "prompt": "Describe this listing: 'The Aurora desk lamp by Lumeo costs 49.90 dollars and is currently in stock.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "brand": {
+        "type": "string"
+      },
+      "price": {
+        "type": "number"
+      },
+      "in_stock": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "name",
+      "brand",
+      "price",
+      "in_stock"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "numeric-05-duration",
+  "category": "numeric",
+  "prompt": "A film lasts 2 hours and 47 minutes. Return the hours, the minutes and the total number of minutes.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "hours": {
+        "type": "integer"
+      },
+      "minutes": {
+        "type": "integer"
+      },
+      "total_minutes": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "hours",
+      "minutes",
+      "total_minutes"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "optional-05-meeting",
+  "category": "optional",
+  "prompt": "Build the meeting: 'Quarterly planning meeting, 90 minutes.' Do not invent any missing field.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "topic": {
+        "type": "string"
+      },
+      "agenda": {
+        "type": "string"
+      },
+      "location": {
+        "type": "string"
+      },
+      "duration_minutes": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "topic"
+    ],
+    "additionalProperties": false
+  }
+}

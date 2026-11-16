@@ -249,3 +249,6 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+
+# Benchmark: local model paths (copy of bench/models.toml.example)
+bench/models.toml

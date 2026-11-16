@@ -1,0 +1,27 @@
+{
+  "id": "numeric-04-discount",
+  "category": "numeric",
+  "prompt": "A jacket costs 120 dollars and has a 25 percent discount. Return the original price, the discount percent and the final price.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "original_price": {
+        "type": "number"
+      },
+      "discount_percent": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "final_price": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "original_price",
+      "discount_percent",
+      "final_price"
+    ],
+    "additionalProperties": false
+  }
+}

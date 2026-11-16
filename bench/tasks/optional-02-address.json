@@ -1,0 +1,27 @@
+{
+  "id": "optional-02-address",
+  "category": "optional",
+  "prompt": "Build the address: 'Delivery to 5 Rue Lafayette, Lyon. Please leave the parcel with the neighbour.' Do not invent any missing field.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "street": {
+        "type": "string"
+      },
+      "city": {
+        "type": "string"
+      },
+      "apartment": {
+        "type": "string"
+      },
+      "notes": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "street",
+      "city"
+    ],
+    "additionalProperties": false
+  }
+}

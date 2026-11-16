@@ -1,0 +1,29 @@
+{
+  "id": "flat_object-04-book",
+  "category": "flat_object",
+  "prompt": "Extract the book record: 'Solaris, written by Stanislaw Lem, first published in 1961, 204 pages.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "author": {
+        "type": "string"
+      },
+      "year": {
+        "type": "integer"
+      },
+      "pages": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "title",
+      "author",
+      "year",
+      "pages"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "optional-03-job_posting",
+  "category": "optional",
+  "prompt": "Build the job posting: 'Backend Developer at Brightwave. Salary from 65000. Fully remote.' Do not invent any missing field.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "company": {
+        "type": "string"
+      },
+      "salary_min": {
+        "type": "number"
+      },
+      "salary_max": {
+        "type": "number"
+      },
+      "remote": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "title",
+      "company"
+    ],
+    "additionalProperties": false
+  }
+}

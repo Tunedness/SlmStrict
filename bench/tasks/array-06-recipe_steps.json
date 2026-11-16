@@ -1,0 +1,38 @@
+{
+  "id": "array-06-recipe_steps",
+  "category": "array",
+  "prompt": "Structure this recipe: 'Pancakes. First mix flour and milk. Second add eggs and whisk. Third fry in butter for two minutes per side.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "steps": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "order": {
+              "type": "integer"
+            },
+            "instruction": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "order",
+            "instruction"
+          ],
+          "additionalProperties": false
+        },
+        "minItems": 1
+      }
+    },
+    "required": [
+      "title",
+      "steps"
+    ],
+    "additionalProperties": false
+  }
+}

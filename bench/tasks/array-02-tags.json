@@ -1,0 +1,24 @@
+{
+  "id": "array-02-tags",
+  "category": "array",
+  "prompt": "Give the article title and its tags: 'Article: Getting Started with SQLite. Topics: databases, sqlite, embedded, tutorial.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "title",
+      "tags"
+    ],
+    "additionalProperties": false
+  }
+}

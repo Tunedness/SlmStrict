@@ -1,0 +1,33 @@
+{
+  "id": "enum-02-ticket_priority",
+  "category": "enum",
+  "prompt": "Classify this support ticket: 'Our production database has been down for 20 minutes and customers cannot log in.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "priority": {
+        "type": "string",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "urgent"
+        ]
+      },
+      "category": {
+        "type": "string",
+        "enum": [
+          "billing",
+          "outage",
+          "feature_request",
+          "question"
+        ]
+      }
+    },
+    "required": [
+      "priority",
+      "category"
+    ],
+    "additionalProperties": false
+  }
+}

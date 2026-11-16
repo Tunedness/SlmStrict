@@ -1,0 +1,26 @@
+{
+  "id": "enum-01-sentiment",
+  "category": "enum",
+  "prompt": "Classify the sentiment of this review and give a confidence between 0 and 1: 'The battery died after two days and support never answered.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "label": {
+        "type": "string",
+        "enum": [
+          "positive",
+          "neutral",
+          "negative"
+        ]
+      },
+      "confidence": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "label",
+      "confidence"
+    ],
+    "additionalProperties": false
+  }
+}

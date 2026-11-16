@@ -1,0 +1,21 @@
+{
+  "id": "array-01-shopping_list",
+  "category": "array",
+  "prompt": "List the items to buy: 'We need eggs, oat milk, spinach, a loaf of rye bread and two lemons.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1
+      }
+    },
+    "required": [
+      "items"
+    ],
+    "additionalProperties": false
+  }
+}

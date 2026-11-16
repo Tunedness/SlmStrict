@@ -1,0 +1,64 @@
+{
+  "id": "nested_object-05-telemetry",
+  "category": "nested_object",
+  "prompt": "Build the telemetry record: 'Device SN-7781, model Falcon-2, at latitude 52.37 longitude 4.90, battery 63 percent and charging.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "device": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "model"
+        ],
+        "additionalProperties": false
+      },
+      "location": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number"
+          },
+          "lon": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "lat",
+          "lon"
+        ],
+        "additionalProperties": false
+      },
+      "battery": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "integer"
+          },
+          "charging": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "level",
+          "charging"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "device",
+      "location",
+      "battery"
+    ],
+    "additionalProperties": false
+  }
+}

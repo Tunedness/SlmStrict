@@ -1,0 +1,60 @@
+{
+  "id": "nested_object-04-patient_visit",
+  "category": "nested_object",
+  "prompt": "Build the visit record: 'Patient 10492, age 67. Heart rate 78 bpm, blood pressure 135 over 85.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "patient": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "age"
+        ],
+        "additionalProperties": false
+      },
+      "vitals": {
+        "type": "object",
+        "properties": {
+          "heart_rate": {
+            "type": "integer"
+          },
+          "blood_pressure": {
+            "type": "object",
+            "properties": {
+              "systolic": {
+                "type": "integer"
+              },
+              "diastolic": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "systolic",
+              "diastolic"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "heart_rate",
+          "blood_pressure"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "patient",
+      "vitals"
+    ],
+    "additionalProperties": false
+  }
+}

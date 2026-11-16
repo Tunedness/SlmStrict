@@ -1,0 +1,18 @@
+# Keeps the build context small and keeps weights, secrets and local state out of the image.
+.git
+.venv
+.mypy_cache
+.pytest_cache
+.ruff_cache
+.coverage
+.claude
+**/__pycache__
+.env
+.env.*
+models
+*.gguf
+*.onnx
+*.onnx.data
+*.safetensors
+bench/models.toml
+bench/results/*

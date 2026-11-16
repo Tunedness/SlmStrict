@@ -1,0 +1,44 @@
+# Copy this file to bench/models.toml (git-ignored) and point it at your local model files.
+# Model weights never go into the repository.
+#
+# A model needs at least one of gguf_path (llama.cpp) or onnx_dir (ONNX Runtime GenAI);
+# a backend without a location is reported as "not run". Relative paths are resolved against
+# the directory of this file.
+
+[settings]
+max_tokens = 512        # llama.cpp: tokens generated per call
+max_length = 2048       # ONNX: prompt plus generated tokens
+temperature = 0.0
+seed = 1                # llama.cpp only
+n_ctx = 4096            # llama.cpp context window
+n_gpu_layers = 0        # llama.cpp: layers offloaded to the GPU
+max_reask = 2           # re-ask attempts of the strict run
+warmup = true           # one untimed generation per cell before the tasks
+
+# prompt_template wraps every prompt (the task text, and the re-ask prompts) in the model's
+# chat format; {prompt} is replaced with the prompt. The backends take plain text and apply no
+# chat template themselves. Check the template against the model card of the files you use.
+
+[[models]]
+name = "Qwen3-4B"
+gguf_path = "/path/to/Qwen3-4B-Q4_K_M.gguf"
+gguf_quantization = "Q4_K_M"
+onnx_dir = "/path/to/Qwen3-4B-onnx-int4"
+onnx_quantization = "int4"
+prompt_template = "<|im_start|>user\n{prompt}<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
+
+[[models]]
+name = "Llama-3.2-3B"
+gguf_path = "/path/to/Llama-3.2-3B-Instruct-Q4_K_M.gguf"
+gguf_quantization = "Q4_K_M"
+onnx_dir = "/path/to/Llama-3.2-3B-Instruct-onnx-int4"
+onnx_quantization = "int4"
+prompt_template = "<|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n"
+
+[[models]]
+name = "Gemma-3-1B"
+gguf_path = "/path/to/gemma-3-1b-it-Q4_K_M.gguf"
+gguf_quantization = "Q4_K_M"
+onnx_dir = "/path/to/gemma-3-1b-it-onnx-int4"
+onnx_quantization = "int4"
+prompt_template = "<start_of_turn>user\n{prompt}<end_of_turn>\n<start_of_turn>model\n"

@@ -1,0 +1,25 @@
+{
+  "id": "numeric-02-average",
+  "category": "numeric",
+  "prompt": "Compute the average of these temperatures: 18, 21, 19, 24, 23. Return the values and their average.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "values": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 1
+      },
+      "average": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "values",
+      "average"
+    ],
+    "additionalProperties": false
+  }
+}

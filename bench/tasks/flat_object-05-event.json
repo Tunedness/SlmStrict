@@ -1,0 +1,29 @@
+{
+  "id": "flat_object-05-event",
+  "category": "flat_object",
+  "prompt": "Extract the event: 'Rust Meetup, 14 March 2027, at the Harbor Hall in Rotterdam. It is an in-person event only.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "date": {
+        "type": "string"
+      },
+      "location": {
+        "type": "string"
+      },
+      "online": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "title",
+      "date",
+      "location",
+      "online"
+    ],
+    "additionalProperties": false
+  }
+}

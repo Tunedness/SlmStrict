@@ -1,0 +1,25 @@
+{
+  "id": "numeric-01-invoice_total",
+  "category": "numeric",
+  "prompt": "Compute the invoice: three items cost 12.50, 8.00 and 4.25. Tax is 18 percent of the subtotal. Return the subtotal, the tax amount and the total.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "subtotal": {
+        "type": "number"
+      },
+      "tax": {
+        "type": "number"
+      },
+      "total": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "subtotal",
+      "tax",
+      "total"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "enum-06-schedule_slot",
+  "category": "enum",
+  "prompt": "Extract the slot: 'Let us meet on Wednesday morning.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "day": {
+        "type": "string",
+        "enum": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ]
+      },
+      "part_of_day": {
+        "type": "string",
+        "enum": [
+          "morning",
+          "afternoon",
+          "evening"
+        ]
+      }
+    },
+    "required": [
+      "day",
+      "part_of_day"
+    ],
+    "additionalProperties": false
+  }
+}

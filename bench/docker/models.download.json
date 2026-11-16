@@ -1,0 +1,52 @@
+{
+  "_comment": "Where each reference model comes from. 'include' patterns are fnmatch patterns relative to 'subdir'. Revisions float on 'main'; the commit that was actually downloaded is written to <model>/manifest.json.",
+  "models": [
+    {
+      "name": "Qwen3-4B",
+      "gguf": {
+        "repo": "Qwen/Qwen3-4B-GGUF",
+        "include": ["Qwen3-4B-Q4_K_M.gguf"],
+        "quantization": "Q4_K_M"
+      },
+      "onnx": {
+        "repo": "onnx-community/Qwen3-4B-ONNX",
+        "subdir": "onnxruntime/cpu_and_mobile/cpu-int4-kld-block-128",
+        "quantization": "int4 (kld, block 128)"
+      }
+    },
+    {
+      "name": "Llama-3.2-3B",
+      "gguf": {
+        "repo": "bartowski/Llama-3.2-3B-Instruct-GGUF",
+        "include": ["Llama-3.2-3B-Instruct-Q4_K_M.gguf"],
+        "quantization": "Q4_K_M"
+      },
+      "onnx": {
+        "repo": "onnx-community/Llama-3.2-3B-Instruct-GENAI-ONNX",
+        "subdir": "cpu_and_mobile/cpu-int4-rtn-block-32-acc-level-4",
+        "quantization": "int4 (rtn, block 32)"
+      }
+    },
+    {
+      "name": "Gemma-3-1B",
+      "gguf": {
+        "repo": "ggml-org/gemma-3-1b-it-GGUF",
+        "include": ["gemma-3-1b-it-Q4_K_M.gguf"],
+        "quantization": "Q4_K_M"
+      },
+      "onnx": {
+        "repo": "Arm/gemma-3-1b-instruct-onnx-genai-int4-emb-int8",
+        "include": [
+          "genai_config.json",
+          "model.onnx",
+          "model.onnx.data",
+          "tokenizer.json",
+          "tokenizer_config.json",
+          "special_tokens_map.json",
+          "chat_template.jinja"
+        ],
+        "quantization": "int4, int8 embeddings"
+      }
+    }
+  ]
+}

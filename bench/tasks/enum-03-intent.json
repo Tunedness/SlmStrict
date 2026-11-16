@@ -1,0 +1,23 @@
+{
+  "id": "enum-03-intent",
+  "category": "enum",
+  "prompt": "Detect the intent of this message: 'Hi, could you tell me whether my flight to Lisbon on Friday is still on time?'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "intent": {
+        "type": "string",
+        "enum": [
+          "book_flight",
+          "cancel_booking",
+          "check_status",
+          "other"
+        ]
+      }
+    },
+    "required": [
+      "intent"
+    ],
+    "additionalProperties": false
+  }
+}

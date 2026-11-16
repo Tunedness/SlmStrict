@@ -1,0 +1,32 @@
+{
+  "id": "enum-05-triage",
+  "category": "enum",
+  "prompt": "Triage this case: 'Child with a high fever for three days and a persistent cough, parents are worried.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "severity": {
+        "type": "string",
+        "enum": [
+          "mild",
+          "moderate",
+          "severe"
+        ]
+      },
+      "department": {
+        "type": "string",
+        "enum": [
+          "pediatrics",
+          "cardiology",
+          "orthopedics",
+          "general"
+        ]
+      }
+    },
+    "required": [
+      "severity",
+      "department"
+    ],
+    "additionalProperties": false
+  }
+}

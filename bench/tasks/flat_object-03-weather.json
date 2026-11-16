@@ -1,0 +1,29 @@
+{
+  "id": "flat_object-03-weather",
+  "category": "flat_object",
+  "prompt": "Summarize this report: 'Oslo: 4 degrees Celsius, light drizzle all afternoon.'",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "city": {
+        "type": "string"
+      },
+      "temperature_c": {
+        "type": "number"
+      },
+      "condition": {
+        "type": "string"
+      },
+      "is_raining": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "city",
+      "temperature_c",
+      "condition",
+      "is_raining"
+    ],
+    "additionalProperties": false
+  }
+}
