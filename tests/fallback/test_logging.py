@@ -7,8 +7,10 @@ import logging
 import pytest
 
 from slmstrict import FallbackConfig, Schema, StrictConfig, agenerate
+from slmstrict.errors import SlmStrictError
 from slmstrict.fallback import (
     CloudFallback,
+    FallbackConfigError,
     FallbackError,
     FallbackValidationFailed,
     RegexMasker,
@@ -88,12 +90,61 @@ async def test_log_content_writes_the_masked_prompt_and_answer(
     assert "bob@corp.io" not in messages
 
 
-async def test_log_content_without_a_masker_logs_what_was_sent(
+def test_log_content_without_a_masker_is_a_configuration_error() -> None:
+    with pytest.raises(FallbackConfigError, match="needs a masker") as caught:
+        CloudFallback(FakeProvider(ANSWER), log_content=True)
+    assert isinstance(caught.value, FallbackError)
+    assert isinstance(caught.value, SlmStrictError)
+    assert "allow_unmasked_content_log=True" in str(caught.value)
+
+
+def test_log_content_error_is_raised_at_construction_before_any_data_moves() -> None:
+    provider = FakeProvider(ANSWER)
+    with pytest.raises(FallbackConfigError):
+        CloudFallback(provider, log_content=True, local_only=False)
+    assert provider.calls == 0
+
+
+async def test_the_unmasked_flag_alone_logs_no_content(caplog: pytest.LogCaptureFixture) -> None:
+    caplog.set_level(logging.DEBUG)
+    handler = CloudFallback(FakeProvider(ANSWER), allow_unmasked_content_log=True)
+    await handler.handle(Schema.of(Item), PROMPT, ())
+    everything = "\n".join(_messages(caplog))
+    assert "ayse@example.com" not in everything
+    assert "UNMASKED" not in everything
+
+
+async def test_both_flags_log_unmasked_content_and_say_so_first(
     caplog: pytest.LogCaptureFixture,
 ) -> None:
     caplog.set_level(logging.DEBUG)
-    await CloudFallback(FakeProvider(ANSWER), log_content=True).handle(Schema.of(Item), PROMPT, ())
-    assert PROMPT in "\n".join(_messages(caplog))
+    handler = CloudFallback(FakeProvider(ANSWER), log_content=True, allow_unmasked_content_log=True)
+    await handler.handle(Schema.of(Item), PROMPT, ())
+
+    messages = _messages(caplog)
+    content = [m for m in messages if PROMPT in m or "bob@corp.io" in m or "UNMASKED" in m]
+    assert content[0].startswith("fallback content log is UNMASKED")
+    assert any(m.startswith("fallback prompt (UNMASKED)") and PROMPT in m for m in content)
+    assert any(m.startswith("fallback answer (UNMASKED)") and "bob@corp.io" in m for m in content)
+    warning = next(r for r in caplog.records if r.getMessage() == content[0])
+    assert warning.levelno == logging.WARNING
+
+
+async def test_a_masker_keeps_the_log_masked_and_unlabelled_even_with_both_flags(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    caplog.set_level(logging.DEBUG)
+    handler = CloudFallback(
+        FakeProvider(ANSWER),
+        masker=RegexMasker(),
+        log_content=True,
+        allow_unmasked_content_log=True,
+    )
+    await handler.handle(Schema.of(Item), PROMPT, ())
+    messages = "\n".join(_messages(caplog))
+    assert "UNMASKED" not in messages
+    assert "fallback prompt (masked)" in messages
+    assert "ayse@example.com" not in messages
 
 
 async def test_log_content_withholds_the_answer_when_the_masker_breaks_late(
@@ -126,7 +177,9 @@ async def test_api_key_is_in_no_log_record_and_no_exception_message(
     caplog.set_level(logging.DEBUG)
     provider = FakeProvider(error=SdkError(f"bad key {SECRET_KEY}"))
     with pytest.raises(FallbackError) as caught:
-        await CloudFallback(provider, log_content=True).handle(Schema.of(Item), "p", ())
+        await CloudFallback(provider, log_content=True, allow_unmasked_content_log=True).handle(
+            Schema.of(Item), "p", ()
+        )
     assert SECRET_KEY not in str(caught.value)
     assert SECRET_KEY not in repr(caught.value)
     assert SECRET_KEY not in "\n".join(

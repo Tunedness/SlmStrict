@@ -20,6 +20,7 @@ from slmstrict.fallback.anthropic import AnthropicProvider
 from slmstrict.fallback.base import (
     DEFAULT_MODELS,
     CloudProvider,
+    FallbackConfigError,
     FallbackDisabledError,
     FallbackError,
     FallbackValidationFailed,
@@ -35,6 +36,7 @@ __all__ = [
     "AnthropicProvider",
     "CloudFallback",
     "CloudProvider",
+    "FallbackConfigError",
     "FallbackDisabledError",
     "FallbackError",
     "FallbackValidationFailed",

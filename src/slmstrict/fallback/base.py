@@ -33,6 +33,7 @@ from slmstrict.schema import Schema, ValidationIssue
 __all__ = [
     "DEFAULT_MODELS",
     "CloudProvider",
+    "FallbackConfigError",
     "FallbackDisabledError",
     "FallbackError",
     "FallbackValidationFailed",
@@ -58,6 +59,14 @@ class FallbackError(SlmStrictError):
     The message never contains the prompt, the model output, an API key or the text of the SDK's
     own exception: only the provider name, the exception class and an HTTP status when there is
     one.
+    """
+
+
+class FallbackConfigError(FallbackError):
+    """The fallback is configured in a way that is not allowed (ADR-007).
+
+    Raised when the handler is built, before any data can move. Today: content logging requested
+    without a masker and without the explicit unmasked-logging flag.
     """
 
 

@@ -292,5 +292,5 @@ def test_repr_never_holds_prompts_or_keys() -> None:
     text = repr(CloudFallback(FakeProvider(), masker=RegexMasker()))
     assert text == (
         "CloudFallback(provider='fake', model='fake-model-1', masker=True, "
-        "local_only=False, log_content=False)"
+        "local_only=False, log_content=False, allow_unmasked_content_log=False)"
     )

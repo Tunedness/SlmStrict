@@ -15,7 +15,11 @@ are the model's failed guesses, they may echo the input, and the provider does n
 
 What is logged (logger ``slmstrict.fallback``): meta data only, namely provider, model, schema
 hash, number of characters sent, duration and outcome. Content is logged only with
-``log_content=True`` and then only the *masked* prompt and a masked copy of the answer.
+``log_content=True`` and then only the *masked* prompt and a masked copy of the answer. Content
+logging needs a masker (ADR-007): ``log_content=True`` without one is a configuration error
+(:class:`~slmstrict.fallback.base.FallbackConfigError`) unless ``allow_unmasked_content_log=True``
+is passed as well. In that case the content log opens with a warning record that says it is
+unmasked, and every content record is labelled as such.
 """
 
 from __future__ import annotations
@@ -27,6 +31,7 @@ from typing import TypeVar
 
 from slmstrict.fallback.base import (
     CloudProvider,
+    FallbackConfigError,
     FallbackDisabledError,
     FallbackError,
     FallbackValidationFailed,
@@ -51,7 +56,11 @@ class CloudFallback:
     ``provider`` is the :class:`~slmstrict.fallback.base.CloudProvider` to call. ``masker`` is the
     masking hook; ``None`` (the default) sends the prompt unmasked. ``local_only=True`` makes the
     router refuse to send anything (:class:`~slmstrict.fallback.base.FallbackDisabledError`).
-    ``log_content=True`` additionally logs the masked prompt and the answer (see module docs).
+    ``log_content=True`` additionally logs the masked prompt and the answer (see module docs); it
+    requires a ``masker``. Without one it raises
+    :class:`~slmstrict.fallback.base.FallbackConfigError`, unless the second, deliberate flag
+    ``allow_unmasked_content_log=True`` is set: then the content is logged as it is and the log
+    says so.
     """
 
     def __init__(
@@ -61,17 +70,27 @@ class CloudFallback:
         masker: Masker | None = None,
         local_only: bool = False,
         log_content: bool = False,
+        allow_unmasked_content_log: bool = False,
     ) -> None:
         if not isinstance(provider, CloudProvider):
             raise TypeError("provider must implement CloudProvider")
         if masker is not None and not isinstance(masker, Masker):
             raise TypeError("masker must implement Masker (a mask(text) -> str method)")
-        if not isinstance(local_only, bool) or not isinstance(log_content, bool):
-            raise TypeError("local_only and log_content must be bool")
+        flags = (local_only, log_content, allow_unmasked_content_log)
+        if not all(isinstance(flag, bool) for flag in flags):
+            raise TypeError("local_only, log_content and allow_unmasked_content_log must be bool")
+        if log_content and masker is None and not allow_unmasked_content_log:
+            raise FallbackConfigError(
+                "log_content=True needs a masker: content logging without masking is not "
+                "allowed (ADR-007). Pass a masker, or opt in explicitly with "
+                "allow_unmasked_content_log=True."
+            )
         self._provider = provider
         self._masker = masker
         self._local_only = local_only
         self._log_content = log_content
+        self._allow_unmasked = allow_unmasked_content_log
+        self._unmasked_log = log_content and masker is None
 
     async def handle(
         self,
@@ -111,7 +130,12 @@ class CloudFallback:
             self._masker is not None,
         )
         if self._log_content:
-            _logger.info("fallback prompt (masked) provider=%s: %s", provider, outgoing)
+            if self._unmasked_log:
+                _logger.warning(
+                    "fallback content log is UNMASKED: no masker is configured "
+                    "(allow_unmasked_content_log=True); prompt and answer are logged as they are"
+                )
+            _logger.info("fallback prompt (%s) provider=%s: %s", self._label, provider, outgoing)
 
         # 3. Provider call.
         started = time.perf_counter()
@@ -136,7 +160,10 @@ class CloudFallback:
         report = schema.validate(reply.text)
         if self._log_content:
             _logger.info(
-                "fallback answer (masked) provider=%s: %s", provider, self._mask_for_log(reply.text)
+                "fallback answer (%s) provider=%s: %s",
+                self._label,
+                provider,
+                self._mask_for_log(reply.text),
             )
         if not report.ok or report.value is None:
             outcome = "refused" if reply.finish_reason == "refusal" else "invalid"
@@ -192,6 +219,10 @@ class CloudFallback:
             raise FallbackError(f"the masker returned a non-string; nothing was sent to {provider}")
         return masked
 
+    @property
+    def _label(self) -> str:
+        return "UNMASKED" if self._unmasked_log else "masked"
+
     def _mask_for_log(self, text: str) -> str:
         """The answer as it may appear in a log: through the masker when there is one."""
         if self._masker is None:
@@ -225,5 +256,6 @@ class CloudFallback:
         return (
             f"CloudFallback(provider={self._provider.name!r}, model={self._provider.model!r}, "
             f"masker={self._masker is not None}, local_only={self._local_only}, "
-            f"log_content={self._log_content})"
+            f"log_content={self._log_content}, "
+            f"allow_unmasked_content_log={self._allow_unmasked})"
         )
