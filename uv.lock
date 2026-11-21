@@ -21,7 +21,7 @@ wheels = [
 
 [[package]]
 name = "anthropic"
-version = "2.8.0"
+version = "2.10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -33,9 +33,9 @@ dependencies = [
     { name = "sniffio" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/75/e6/aabc3c266a0aaf38fa542648585741fce9616ba4cd034ddde74548f790a0/anthropic-2.8.0.tar.gz", hash = "sha256:d34e389ba0544cd64e033eb7475f46cc1ac6f2a388cdcd472b33ad4ac29ef40c", size = 1976933, upload-time = "2026-11-10T16:33:19.38Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/49/e4/42615a688c415bb4a05510c3964c58e04b5b88d574ecf07455371ce758b7/anthropic-2.10.0.tar.gz", hash = "sha256:6f3ffbdc6eb0a09a197be2eabdc62b8395a13d692710b8cdfa0393a80b355585", size = 2011659, upload-time = "2026-11-17T18:28:48.258Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/96/8e/f8ef271dcbe3b187879b660c129ee36ef655c7b878f6878460891d9b2a26/anthropic-2.8.0-py3-none-any.whl", hash = "sha256:76ad332e2d500fc54d0112cf100544ad1a7605e71e092b98d9eb664d2b66e283", size = 2456925, upload-time = "2026-11-10T16:33:21.388Z" },
+    { url = "https://files.pythonhosted.org/packages/b5/02/4496b5a84f2b77ff31b25fa573f9fa2ce6a2be4e165db10a63aaa958a6dd/anthropic-2.10.0-py3-none-any.whl", hash = "sha256:1b91b2b4aa2bab44db8712e8a9053454bcff6daa3e6f5f11d85dc38b37d0a2a3", size = 2519451, upload-time = "2026-11-17T18:28:50.04Z" },
 ]
 
 [[package]]
@@ -628,7 +628,7 @@ requests = [
 
 [[package]]
 name = "google-genai"
-version = "3.3.0"
+version = "3.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -642,9 +642,9 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "websockets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3c/8f/f1d323f57e2eedf3900beb46f428d0fe219e93d42344a8d94fcfe6ec809b/google_genai-3.3.0.tar.gz", hash = "sha256:c0ab7bfbf13d4a24a5798ec9e4200773b2fa150eb620317db337f751a9c9576c", size = 828244, upload-time = "2026-11-12T19:57:01.02Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c0/7d/7c6c225a5903fa4f79feeb251d1daa2b56c0e6bb499694d8e3a3caf6ddcb/google_genai-3.5.0.tar.gz", hash = "sha256:3bf424714df775f38aa8adf6c002d660276a147bec288c55db41cccae6ba2eef", size = 881269, upload-time = "2026-11-18T02:29:51.718Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ae/e4/619de4d0f985cfafc7a420339796279716aba5c6cac362ab4f97b856279f/google_genai-3.3.0-py3-none-any.whl", hash = "sha256:86bd1830fec4b12e474237414fa52383aa0f49458910f6c9c938c207715559b5", size = 1365721, upload-time = "2026-11-12T19:56:59.174Z" },
+    { url = "https://files.pythonhosted.org/packages/fb/56/69819dde4744a3d8007e571435d8c7ba21bbc824c90b15cabd863ce9619d/google_genai-3.5.0-py3-none-any.whl", hash = "sha256:2a8320df8a27d4483a95a65211bc787a78a7ba3c8512d0e9e3daabf9d8dda34e", size = 1467926, upload-time = "2026-11-18T02:29:49.399Z" },
 ]
 
 [[package]]
@@ -1056,7 +1056,7 @@ wheels = [
 
 [[package]]
 name = "llama-cpp-python"
-version = "0.3.36"
+version = "0.3.37"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "diskcache" },
@@ -1065,7 +1065,7 @@ dependencies = [
     { name = "numpy", version = "2.5.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ec/e9/e7de2b0463ea3ffbf0ede6cb21b58c1258a8f6521aae45ca773a59fe7cf3/llama_cpp_python-0.3.36.tar.gz", hash = "sha256:832db0699007f1be95a7e41ef12e88926b02ba836461e36a36372db2760c1a2e", size = 76589250, upload-time = "2026-10-01T05:48:01.345Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7f/9a/3ebc0b3ef42b8d9cc7d15dc9b147b3e8ce11bfdb61eb381c3eb7d9762373/llama_cpp_python-0.3.37.tar.gz", hash = "sha256:bf4108fc76e933ea4969b61b1e281a2d232dd3e43361d1fdca5e2e029d62f729", size = 80885950, upload-time = "2026-11-15T09:14:07.435Z" }
 
 [[package]]
 name = "markupsafe"
@@ -1466,7 +1466,7 @@ wheels = [
 
 [[package]]
 name = "onnxruntime-genai"
-version = "0.19.0"
+version = "0.20.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
@@ -1474,31 +1474,31 @@ dependencies = [
     { name = "onnxruntime" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6d/46/882fceaebfefe26d158794e145a441a3b1382236ab30cc44d75df5125bfc/onnxruntime_genai-0.19.0-cp311-cp311-macosx_12_0_arm64.whl", hash = "sha256:302251fbb402ec910d7cb03d9a3407c2283c8f6c886db116ca0731a5cf0eb059", size = 4481402, upload-time = "2026-11-03T06:16:49.43Z" },
-    { url = "https://files.pythonhosted.org/packages/49/6e/5d37963b6e419d6b545a9721925d382595ad36af48717a3e1a483373a564/onnxruntime_genai-0.19.0-cp311-cp311-manylinux_2_28_aarch64.whl", hash = "sha256:0cf0447a31fec7b0bf77e838393011cb784af40a02f1936352dd1776ddd650d9", size = 11468228, upload-time = "2026-11-03T06:16:51.694Z" },
-    { url = "https://files.pythonhosted.org/packages/06/34/70c95cf915b424a8c9560a23f7ff48f26812a0615f9c92ef8994c93cd59c/onnxruntime_genai-0.19.0-cp311-cp311-manylinux_2_28_x86_64.whl", hash = "sha256:ea1cef6a4f5712322b2b3df7760fdae49b8d164ba1e5d6cbf5b09fbc45baa6cb", size = 11833095, upload-time = "2026-11-03T06:16:54.511Z" },
-    { url = "https://files.pythonhosted.org/packages/2a/fd/69c4d4c9a109c649418f501c5a3ea819665753adc9cc838afabbd7125858/onnxruntime_genai-0.19.0-cp311-cp311-win_amd64.whl", hash = "sha256:12443bded3a8eab005d03c653968493699caeee3bf07727cf5ab7df60f5e7fd8", size = 4702106, upload-time = "2026-11-03T06:16:56.975Z" },
-    { url = "https://files.pythonhosted.org/packages/d0/d8/07032b7083a3f4d59e1a27080298757afbbc511f90f507aaee154014ba2d/onnxruntime_genai-0.19.0-cp311-cp311-win_arm64.whl", hash = "sha256:75d0d2ab0ddb44f274c188362bc7ac0e9fd8c137bef772b2fda60bd6eab43f0d", size = 4532894, upload-time = "2026-11-03T06:16:59.044Z" },
-    { url = "https://files.pythonhosted.org/packages/92/5f/65d701e8b69e9ae5893a798c10b36aeb9c4c4e464846be68899717d75934/onnxruntime_genai-0.19.0-cp312-cp312-macosx_12_0_arm64.whl", hash = "sha256:4df57b403354124ecbd0c852c2c3d057ffc36af6302a6e0fadb3a5f475e3df7e", size = 4484048, upload-time = "2026-11-03T06:17:00.962Z" },
-    { url = "https://files.pythonhosted.org/packages/79/30/380d048df524b3e8bdd4ab5965425354e079be4297880139eaf62c8b755a/onnxruntime_genai-0.19.0-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:0123c1bdbe6b56317b8691bf01dd425c53c5732b8dc8f5520a0d97b6da410fe4", size = 11475266, upload-time = "2026-11-03T06:17:03.028Z" },
-    { url = "https://files.pythonhosted.org/packages/28/30/96cb619ba307464bd094817a2332e65e44c9780144df6ca9dfb885677047/onnxruntime_genai-0.19.0-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:b4afca2289e40073ead9a81105b25a2a609c3135bd098485282756bc4a37b6b7", size = 11840535, upload-time = "2026-11-03T06:17:06.386Z" },
-    { url = "https://files.pythonhosted.org/packages/cc/ef/fe15dedc91009759f020e395bb564353fe4456a8fbcace373b10331c2b97/onnxruntime_genai-0.19.0-cp312-cp312-win_amd64.whl", hash = "sha256:a97a8711d4f9304acbd3097444fca0db91a1c42431a45e299f413fe919cc6951", size = 4704682, upload-time = "2026-11-03T06:17:10.968Z" },
-    { url = "https://files.pythonhosted.org/packages/f2/39/21f99811d50055813a49a2ccd4454be15b7dd595f695873aa26de46e3c68/onnxruntime_genai-0.19.0-cp312-cp312-win_arm64.whl", hash = "sha256:5ede4808a3469ffc38ed7953340551076c1db558d4868db75c7d2546b2522ee9", size = 4530956, upload-time = "2026-11-03T06:17:12.933Z" },
-    { url = "https://files.pythonhosted.org/packages/f5/54/9c64fd039ce9fda9ec6e69ee671acaceee124ee6948f9902ec10aa732113/onnxruntime_genai-0.19.0-cp313-cp313-macosx_12_0_arm64.whl", hash = "sha256:5c97f2ab7158bffecae942edcb7eefeca597e6612abb3bd9faccc657d11b4a25", size = 4484063, upload-time = "2026-11-03T06:17:14.88Z" },
-    { url = "https://files.pythonhosted.org/packages/fc/dd/05c74ed1f0a4b81962222e0220ba2991445c28a83d62c8478a93bf1ede5d/onnxruntime_genai-0.19.0-cp313-cp313-manylinux_2_28_aarch64.whl", hash = "sha256:428296ef774d8bd6002bdabaa9aaa5626a43d968a95843d231b70dffc8c31382", size = 11475274, upload-time = "2026-11-03T06:17:20.458Z" },
-    { url = "https://files.pythonhosted.org/packages/80/c6/cf06c685ebf4fc875a693d170cf966c25de550f8d7271ab4666cda43e738/onnxruntime_genai-0.19.0-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:843f953b6cf55c3590702f93008665df142a5c6d5049c040e170d5dd207f00b4", size = 11840441, upload-time = "2026-11-03T06:17:24.359Z" },
-    { url = "https://files.pythonhosted.org/packages/6e/01/118a2d3b2a63aedde7b0b2a58d8b17475a588b072cae3a81560d6619deac/onnxruntime_genai-0.19.0-cp313-cp313-win_amd64.whl", hash = "sha256:74bb323e57716c96a0ac2affa7fb87214175a7d2d3d17a983538372e91a07f53", size = 4704698, upload-time = "2026-11-03T06:17:28.13Z" },
-    { url = "https://files.pythonhosted.org/packages/0c/9c/c2d0a8c0dc803a5d63bc3a3bff2338d09159b0636dcfe1c4b09ef6f6dfb7/onnxruntime_genai-0.19.0-cp313-cp313-win_arm64.whl", hash = "sha256:472d8e994c643900f9e19fe81a6805ecbe1a1c539677c67532349edf9861c4a4", size = 4530968, upload-time = "2026-11-03T06:17:30.5Z" },
-    { url = "https://files.pythonhosted.org/packages/87/aa/72f43b72316d9de017067a8c3dab064d7f3e59027dea8ea71e1c82bdd2ef/onnxruntime_genai-0.19.0-cp314-cp314-macosx_12_0_arm64.whl", hash = "sha256:9deffd7828996c606ed2e11cb010c397badc43b5465f8a27b2ce297f4613d680", size = 4484693, upload-time = "2026-11-03T06:17:33.347Z" },
-    { url = "https://files.pythonhosted.org/packages/2b/b2/2a69b4fd4524cbc879034d40978e194cf5cbb958fa7bfc49ce55d4744bff/onnxruntime_genai-0.19.0-cp314-cp314-manylinux_2_28_aarch64.whl", hash = "sha256:1c1501014631dcf450d9345cbc778059c30edd02cba4f53b175e27a01187f307", size = 11476379, upload-time = "2026-11-03T06:17:35.943Z" },
-    { url = "https://files.pythonhosted.org/packages/21/0b/93c079d59f0feec22a12b8cb7ab04147fc1c959a17001b3b4613f16bcb0a/onnxruntime_genai-0.19.0-cp314-cp314-manylinux_2_28_x86_64.whl", hash = "sha256:f9cf1c908f20313b4b7ea047aa5c9d5a237c4a11c10ff1e30e7e7c8113040c1a", size = 11841195, upload-time = "2026-11-03T06:17:38.434Z" },
-    { url = "https://files.pythonhosted.org/packages/f5/41/dd2a45517731f8e0a9e938e00bc2ec2a1dfdc74f6f880b349d780e03d84f/onnxruntime_genai-0.19.0-cp314-cp314-win_amd64.whl", hash = "sha256:ada6a2f09e8442a137a71167704b90ecb4715f1f7dcb0e917c34a20df342904c", size = 4860171, upload-time = "2026-11-03T06:17:40.866Z" },
-    { url = "https://files.pythonhosted.org/packages/03/31/2ceef982fa142d775e88481f1d55d642e0d56efd5761db94919888e16815/onnxruntime_genai-0.19.0-cp314-cp314-win_arm64.whl", hash = "sha256:c6bb66edca8233ae26f4d0e2e368f9a8de46d1eb83ec020f83cecde1a247e357", size = 4681555, upload-time = "2026-11-03T06:17:43.439Z" },
+    { url = "https://files.pythonhosted.org/packages/92/c7/3059d1836da81515c1d4d2aa02b7b4a7d77daeb77d7ba25ccba393808abe/onnxruntime_genai-0.20.0-cp311-cp311-macosx_12_0_arm64.whl", hash = "sha256:c292ec0be85e5c379d15d4c145ffdf6c5668e8d82d8a267123b35fc84e114c00", size = 5008823, upload-time = "2026-11-14T20:26:57.8Z" },
+    { url = "https://files.pythonhosted.org/packages/f9/56/50b1f634339b4fbc36971e311ff0fbe6a574b13af39ebacbff47e2130876/onnxruntime_genai-0.20.0-cp311-cp311-manylinux_2_28_aarch64.whl", hash = "sha256:c40dc5114e2a7968bcb6a499e22d8540701c9c1f44b637b2f5c7fb0790a68ea7", size = 7068316, upload-time = "2026-11-14T20:27:00.073Z" },
+    { url = "https://files.pythonhosted.org/packages/a5/1a/12b9ecaafd092cabef326306c6f21ed21dae406935c00891be0cfe93ef3d/onnxruntime_genai-0.20.0-cp311-cp311-manylinux_2_28_x86_64.whl", hash = "sha256:1fe6a73ad778b108e4688f8da919120bfd40f2bee9ec64a256d793112104a07e", size = 7552736, upload-time = "2026-11-14T20:27:02.235Z" },
+    { url = "https://files.pythonhosted.org/packages/7f/25/0c55ae6dc92574eb33c7fb92e9f0f8fd6200c05e0d703b69f3f0210869a1/onnxruntime_genai-0.20.0-cp311-cp311-win_amd64.whl", hash = "sha256:a5e92fea0c455132c44bd133864ce9e42baf4adb456942c2a8f6500c15e0d35a", size = 5146567, upload-time = "2026-11-14T20:27:04.481Z" },
+    { url = "https://files.pythonhosted.org/packages/38/b9/9f14f8b6e122d88faada7cb4061a28eeb6f10e8f5f9e5d438f272b707ccb/onnxruntime_genai-0.20.0-cp311-cp311-win_arm64.whl", hash = "sha256:a58998e881564539d3e8ed67bd7b48e091c583c62333241458cc08d06235ee16", size = 4963080, upload-time = "2026-11-14T20:27:06.494Z" },
+    { url = "https://files.pythonhosted.org/packages/a0/bf/e6e2bb7c63ba873eb41d2f5e79f8acf15e4b8e87c15b7cc9f4bee90c3976/onnxruntime_genai-0.20.0-cp312-cp312-macosx_12_0_arm64.whl", hash = "sha256:7732173c0736c45ccbe3f11ba0a8b629f94965e90e11599650a6cea4f4ef4d54", size = 5011467, upload-time = "2026-11-14T20:27:08.619Z" },
+    { url = "https://files.pythonhosted.org/packages/9f/0b/716a8bd375813755f0fdfd2dc7566f58589c2668948d6c4c38cd9aad5156/onnxruntime_genai-0.20.0-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:2bdb673673e448bcb0fa45ae6055d81502f51e8bd82256cfe69560fcf52981a3", size = 7075054, upload-time = "2026-11-14T20:27:10.823Z" },
+    { url = "https://files.pythonhosted.org/packages/1b/2b/261e99836e7975b5446171fcca5e15213174feffef3f9a167b3bf9d80e8e/onnxruntime_genai-0.20.0-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:2eed95baa10521bbd000591e3646302ade7afef7bafa28b58c590896fec1edee", size = 7559816, upload-time = "2026-11-14T20:27:12.955Z" },
+    { url = "https://files.pythonhosted.org/packages/55/2e/0c5d61facb932a8fc1736808c1b688e22e97a66ca01f13fef6bb72c52701/onnxruntime_genai-0.20.0-cp312-cp312-win_amd64.whl", hash = "sha256:e44c43a3fb3223e39c17aff9a7c9ae26ab7d49a67b039f16b99c606ed6c46331", size = 5149103, upload-time = "2026-11-14T20:27:14.92Z" },
+    { url = "https://files.pythonhosted.org/packages/d2/a5/454d74e5deb17d9d971c3d74a74f01a5a0ba519d079aeb897f730cfbb474/onnxruntime_genai-0.20.0-cp312-cp312-win_arm64.whl", hash = "sha256:ef44666617be0029c41d905066dee158342d9c7c9e8733d9b77815a10979b692", size = 4961244, upload-time = "2026-11-14T20:27:17.01Z" },
+    { url = "https://files.pythonhosted.org/packages/65/de/37010b6c5d8c093fa8f4f46d7ff718c3655a7499aecc800bb0e319d6d0fa/onnxruntime_genai-0.20.0-cp313-cp313-macosx_12_0_arm64.whl", hash = "sha256:f12de1b19b44ac48f6adb638fe8c182729544eb86850d442307aab488438ff5a", size = 5011490, upload-time = "2026-11-14T20:27:18.953Z" },
+    { url = "https://files.pythonhosted.org/packages/bb/16/8c47014b0fbf8ecbe744cd0ebc843155d936c30c3c9a7eb26008fc172e0d/onnxruntime_genai-0.20.0-cp313-cp313-manylinux_2_28_aarch64.whl", hash = "sha256:19f669224ca03e2cd145facb18500bf738b9e5d2a7d872eed49f3d3a49156b87", size = 7075075, upload-time = "2026-11-14T20:27:21.073Z" },
+    { url = "https://files.pythonhosted.org/packages/19/51/391779dcfb5432dd8d9de926146b7c0520593d629ff1891974944944835d/onnxruntime_genai-0.20.0-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:ae1b17fa8172162de49baa4e3ab8abb4d020f6e6770ce3d4bdb0dfa22e7842b0", size = 7559831, upload-time = "2026-11-14T20:27:23.054Z" },
+    { url = "https://files.pythonhosted.org/packages/b5/d9/161849b242350536432e18b462c6378121796fceac361202feeffdf82bdf/onnxruntime_genai-0.20.0-cp313-cp313-win_amd64.whl", hash = "sha256:afeaa6ad3b9f71d8269eb6c745d549a75401a1543bd8a6a3a76e0180f32fac12", size = 5149090, upload-time = "2026-11-14T20:27:25.325Z" },
+    { url = "https://files.pythonhosted.org/packages/1a/2f/390edc7ef2f70d9cdc4ef866cf30522ee97c2624ceb47ea60f2150c55937/onnxruntime_genai-0.20.0-cp313-cp313-win_arm64.whl", hash = "sha256:04193001ed015f76d9d30e2d20dd68dee1711e8c03dd3e25bd6866a845addac0", size = 4961179, upload-time = "2026-11-14T20:27:27.463Z" },
+    { url = "https://files.pythonhosted.org/packages/24/30/b4a1dbbc784e637c32d4af0106064a003ea2effa323e7e72dc223e5eebf7/onnxruntime_genai-0.20.0-cp314-cp314-macosx_12_0_arm64.whl", hash = "sha256:b5c6aeb969c57c8e7cc60e5fb0801e5f4c7823e3cc348eb1f725c226d890f8e0", size = 5011904, upload-time = "2026-11-14T20:27:29.329Z" },
+    { url = "https://files.pythonhosted.org/packages/79/e4/37190927e6474f88cd0c626bd838ae9f0e4d050db9757132e6dd6c4e9470/onnxruntime_genai-0.20.0-cp314-cp314-manylinux_2_28_aarch64.whl", hash = "sha256:37cd046eed330ffaf0092e7ed0aceb999fadecd7403ef8c0c7fefe22e41dcf67", size = 7076375, upload-time = "2026-11-14T20:27:31.616Z" },
+    { url = "https://files.pythonhosted.org/packages/4a/fc/4f59094c8031b1e6149d2e7df1e6961b09b9b18c71f9e162640c1ad61ea0/onnxruntime_genai-0.20.0-cp314-cp314-manylinux_2_28_x86_64.whl", hash = "sha256:c6598b4783a5b54271ab04ed754be67088d163db2fda3c94adb437b51f136744", size = 7560501, upload-time = "2026-11-14T20:27:33.853Z" },
+    { url = "https://files.pythonhosted.org/packages/df/b9/25a6808c7545bcd29bdee294613c4be4a4d56788bd557699ab3a52cfecb0/onnxruntime_genai-0.20.0-cp314-cp314-win_amd64.whl", hash = "sha256:6e33b1c553518c42a6549ea05f35f609276546e0791552f377bbec76c0c74bbc", size = 5316489, upload-time = "2026-11-14T20:27:35.858Z" },
+    { url = "https://files.pythonhosted.org/packages/30/a0/0b1cc9ab4744b3db92c8f8dd4d7d3955da8126bdf21b7c08256aefda4f87/onnxruntime_genai-0.20.0-cp314-cp314-win_arm64.whl", hash = "sha256:9e65f02b656b9e8c4185259898454ddf03dc8e1918c476e0c11cb7a9ea035a12", size = 5124032, upload-time = "2026-11-14T20:27:37.907Z" },
 ]
 
 [[package]]
 name = "openai"
-version = "3.51.0"
+version = "3.55.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -1508,9 +1508,9 @@ dependencies = [
     { name = "sniffio" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/db/fa/30f098b042a354f685def1d0fe4c817fc4a534233f497fcf5fc29467c58d/openai-3.51.0.tar.gz", hash = "sha256:1cc9b80eb0f1dc15fa45fbc122ba2c99b7e5302548060c01db5719fa6181a6a9", size = 2415149, upload-time = "2026-11-13T21:13:39.771Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/fd/db/2c78953776d819eac18b10bc830942693203f7d763b0c875ad930a7394a1/openai-3.55.0.tar.gz", hash = "sha256:82f8df6cbe8caf6042cee8c5bf6d6f4289602d01dc0d5a6b948a51cb2fc07cdf", size = 2424334, upload-time = "2026-11-18T05:22:44.688Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/52/f9/d3d9ef409ee4e90de64c9b12f15879f56fc845c2eb9cfe6f314b402de7f1/openai-3.51.0-py3-none-any.whl", hash = "sha256:802b7e8c6ff8cf4d59a2a163126c10ce472adf0409ac41fdaadd47c9b4ed091a", size = 2446085, upload-time = "2026-11-13T21:13:37.969Z" },
+    { url = "https://files.pythonhosted.org/packages/a1/93/6ec762afbed22955be993122b4a50dccfe053211ada3d8761661e8c14b95/openai-3.55.0-py3-none-any.whl", hash = "sha256:376608c04596a8add1c049ccae8e0818849ccecd598b385c38dfdfba6275f5f1", size = 2451243, upload-time = "2026-11-18T05:22:42.573Z" },
 ]
 
 [[package]]
